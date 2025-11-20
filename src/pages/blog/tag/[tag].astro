@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Card from '../../../components/ui/Card.astro';
+import Badge from '../../../components/ui/Badge.astro';
+import Button from '../../../components/ui/Button.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../../../utils/date';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const publishedPosts = allPosts.filter(post => !post.data.draft);
+
+  const allTags = [...new Set(publishedPosts.flatMap(post => post.data.tags))];
+
+  return allTags.map(tag => ({
+    params: { tag },
+    props: {
+      posts: publishedPosts
+        .filter(post => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()),
+    },
+  }));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout title={`Posts tagged "${tag}" - Claude Code Blog`}>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <div class="max-w-3xl mb-12">
+      <div class="mb-4">
+        <Button href="/blog" variant="ghost" size="sm">
+          ← Back to Blog
+        </Button>
+      </div>
+      <div class="flex items-center gap-3 mb-4">
+        <h1 class="text-4xl md:text-5xl font-mono font-bold">Posts tagged</h1>
+        <Badge variant="clay" class="text-lg px-4 py-2">{tag}</Badge>
+      </div>
+      <p class="text-xl text-[rgb(var(--color-text-muted))]">
+        Found {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+      </p>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {posts.map((post) => (
+        <Card hover class="p-6 flex flex-col h-full">
+          <div class="flex-1">
+            {/* Tags */}
+            <div class="flex flex-wrap gap-2 mb-3">
+              {post.data.tags.slice(0, 3).map((t) => (
+                <a href={`/blog/tag/${t}`}>
+                  <Badge variant={t === tag ? 'clay' : 'default'}>
+                    {t}
+                  </Badge>
+                </a>
+              ))}
+            </div>
+
+            {/* Title */}
+            <h2 class="text-xl font-mono font-semibold mb-2">
+              <a
+                href={`/blog/${post.id}`}
+                class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300"
+              >
+                {post.data.title}
+              </a>
+            </h2>
+
+            {/* Description */}
+            <p class="text-[rgb(var(--color-text-muted))] mb-4">
+              {post.data.description}
+            </p>
+          </div>
+
+          {/* Footer */}
+          <div class="flex items-center justify-between pt-4 border-t border-[rgb(var(--color-border))]">
+            <span class="text-sm text-[rgb(var(--color-text-muted))]">
+              {formatDate(post.data.publishDate)}
+            </span>
+            <a
+              href={`/blog/${post.id}`}
+              class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+            >
+              Read more →
+            </a>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

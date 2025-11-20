@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/ui/Card.astro';
+import Badge from '../../components/ui/Badge.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../../utils/date';
+
+const allPosts = await getCollection('blog');
+const publishedPosts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+// Get all unique tags
+const allTags = [...new Set(publishedPosts.flatMap(post => post.data.tags))].sort();
+---
+
+<BaseLayout title="Blog - Claude Code" description="Read the latest news, features, and guides for Claude Code.">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <div class="max-w-3xl mb-12">
+      <h1 class="text-4xl md:text-5xl font-mono font-bold mb-4">Blog</h1>
+      <p class="text-xl text-[rgb(var(--color-text-muted))]">
+        News, features, and guides for building with Claude Code.
+      </p>
+    </div>
+
+    <!-- Tags Filter -->
+    <div class="mb-8 flex flex-wrap gap-2">
+      <span class="text-sm font-mono text-[rgb(var(--color-text-muted))]">Filter by tag:</span>
+      {allTags.map((tag) => (
+        <a href={`/blog/tag/${tag}`}>
+          <Badge variant="default" class="cursor-pointer hover:border-[rgb(var(--color-clay))] transition-colors">
+            {tag}
+          </Badge>
+        </a>
+      ))}
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {publishedPosts.map((post) => (
+        <Card hover class="p-6 flex flex-col h-full">
+          <div class="flex-1">
+            {/* Tags */}
+            <div class="flex flex-wrap gap-2 mb-3">
+              {post.data.tags.slice(0, 3).map((tag) => (
+                <a href={`/blog/tag/${tag}`}>
+                  <Badge variant={post.data.featured ? 'clay' : 'default'}>
+                    {tag}
+                  </Badge>
+                </a>
+              ))}
+              {post.data.featured && (
+                <Badge variant="mint">Featured</Badge>
+              )}
+            </div>
+
+            {/* Title */}
+            <h2 class="text-xl font-mono font-semibold mb-2">
+              <a
+                href={`/blog/${post.id}`}
+                class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300"
+              >
+                {post.data.title}
+              </a>
+            </h2>
+
+            {/* Description */}
+            <p class="text-[rgb(var(--color-text-muted))] mb-4">
+              {post.data.description}
+            </p>
+          </div>
+
+          {/* Footer */}
+          <div class="flex items-center justify-between pt-4 border-t border-[rgb(var(--color-border))]">
+            <span class="text-sm text-[rgb(var(--color-text-muted))]">
+              {formatDate(post.data.publishDate)}
+            </span>
+            <a
+              href={`/blog/${post.id}`}
+              class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+            >
+              Read more →
+            </a>
+          </div>
+        </Card>
+      ))}
+    </div>
+
+    {/* Empty State */}
+    {publishedPosts.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-xl text-[rgb(var(--color-text-muted))]">
+          No posts yet. Check back soon!
+        </p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

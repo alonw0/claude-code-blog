@@ -1,16 +1,291 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import Card from '../components/ui/Card.astro';
+import Badge from '../components/ui/Badge.astro';
+import NewsSlider from '../components/NewsSlider.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../utils/date';
 
+// Get featured and recent posts
+const allPosts = await getCollection('blog');
+const publishedPosts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const featuredPosts = publishedPosts.filter(post => post.data.featured).slice(0, 3);
+const recentPosts = publishedPosts.slice(0, 6);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Claude Code Blog - News, Features & Guides">
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden py-20 md:py-32">
+    <!-- Animated Background -->
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0 bg-gradient-to-br from-[rgba(var(--color-clay),0.05)] via-transparent to-[rgba(var(--color-mint),0.05)]"></div>
+      <div class="shimmer absolute inset-0"></div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center">
+        <!-- Terminal-style decoration -->
+        <div class="inline-flex items-center space-x-2 mb-6 opacity-0 animate-[fadeIn_0.6s_ease-out_0.1s_forwards]">
+          <span class="w-3 h-3 rounded-full bg-red-400"></span>
+          <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+          <span class="w-3 h-3 rounded-full bg-green-400"></span>
+          <span class="font-mono text-sm text-[rgb(var(--color-text-muted))]">claude-code-blog</span>
+        </div>
+
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-mono font-bold mb-6 opacity-0 animate-[fadeIn_0.6s_ease-out_0.2s_forwards]">
+          Building with
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[rgb(var(--color-clay))] to-[rgb(var(--color-crail))] clay-glow">
+            Claude Code
+          </span>
+        </h1>
+
+        <p class="text-xl md:text-2xl text-[rgb(var(--color-text-muted))] mb-8 opacity-0 animate-[fadeIn_0.6s_ease-out_0.3s_forwards]">
+          News, features, and guides for Claude Code.
+          <br />
+          Learn, build, and contribute.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-[fadeIn_0.6s_ease-out_0.4s_forwards]">
+          <Button href="/blog" variant="primary" size="lg">
+            Read the Blog
+          </Button>
+          <Button href="/contribute" variant="secondary" size="lg">
+            Contribute a Post
+          </Button>
+        </div>
+
+        <!-- Stats or Quick Links -->
+        <div class="mt-12 flex flex-wrap justify-center gap-8 text-sm opacity-0 animate-[fadeIn_0.6s_ease-out_0.5s_forwards]">
+          <div class="text-center">
+            <div class="font-mono font-bold text-2xl text-[rgb(var(--color-clay))]">{publishedPosts.length}+</div>
+            <div class="text-[rgb(var(--color-text-muted))]">Articles</div>
+          </div>
+          <div class="text-center">
+            <div class="font-mono font-bold text-2xl text-[rgb(var(--color-clay))]">Open Source</div>
+            <div class="text-[rgb(var(--color-text-muted))]">Community Driven</div>
+          </div>
+          <!-- <div class="text-center">
+            <div class="font-mono font-bold text-2xl text-[rgb(var(--color-clay))]">MIT</div>
+            <div class="text-[rgb(var(--color-text-muted))]">License</div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Posts -->
+  {featuredPosts.length > 0 && (
+    <section class="py-16 border-t border-[rgb(var(--color-border))]">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-3xl font-mono font-bold">Featured Posts</h2>
+          <Badge variant="clay">Highlighted</Badge>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredPosts.map((post) => (
+            <Card hover class="p-6 flex flex-col h-full">
+              <div class="flex-1">
+                <div class="flex flex-wrap gap-2 mb-3">
+                  {post.data.tags.slice(0, 2).map((tag) => (
+                    <Badge variant="clay">{tag}</Badge>
+                  ))}
+                </div>
+
+                <h3 class="text-xl font-mono font-semibold mb-2 group">
+                  <a
+                    href={`/blog/${post.id}`}
+                    class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300"
+                  >
+                    {post.data.title}
+                  </a>
+                </h3>
+
+                <p class="text-[rgb(var(--color-text-muted))] mb-4">
+                  {post.data.description}
+                </p>
+              </div>
+
+              <div class="flex items-center justify-between pt-4 border-t border-[rgb(var(--color-border))]">
+                <span class="text-sm text-[rgb(var(--color-text-muted))]">
+                  {formatDate(post.data.publishDate)}
+                </span>
+                <a
+                  href={`/blog/${post.id}`}
+                  class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+                >
+                  Read more →
+                </a>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Recent Posts -->
+  <section class="py-16 border-t border-[rgb(var(--color-border))]">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-3xl font-mono font-bold">Latest Posts</h2>
+        <Button href="/blog" variant="ghost">
+          View All →
+        </Button>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {recentPosts.map((post) => (
+          <Card hover class="p-6 flex flex-col h-full">
+            <div class="flex-1">
+              <div class="flex flex-wrap gap-2 mb-3">
+                {post.data.tags.slice(0, 2).map((tag) => (
+                  <Badge>{tag}</Badge>
+                ))}
+              </div>
+
+              <h3 class="text-xl font-mono font-semibold mb-2">
+                <a
+                  href={`/blog/${post.id}`}
+                  class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300"
+                >
+                  {post.data.title}
+                </a>
+              </h3>
+
+              <p class="text-[rgb(var(--color-text-muted))] mb-4">
+                {post.data.description}
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-[rgb(var(--color-border))]">
+              <span class="text-sm text-[rgb(var(--color-text-muted))]">
+                {formatDate(post.data.publishDate)}
+              </span>
+              <a
+                href={`/blog/${post.id}`}
+                class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+              >
+                Read more →
+              </a>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stay Updated Section -->
+  <section class="py-16 border-t border-[rgb(var(--color-border))]">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center mb-8">
+        <h2 class="text-3xl md:text-4xl font-mono font-bold mb-4">
+          Stay Updated
+        </h2>
+        <p class="text-xl text-[rgb(var(--color-text-muted))]">
+          Keep up with the latest Claude Code updates and Anthropic news
+        </p>
+      </div>
+
+      <!-- Anthropic News Slider -->
+      <div class="max-w-4xl mx-auto mb-8">
+        <NewsSlider limit={5} compact={true} />
+        <div class="text-center mt-4">
+          <a
+            href="/news"
+            class="inline-flex items-center gap-2 text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+          >
+            View all news
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links Grid -->
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <Card hover class="p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-[rgb(var(--color-clay))] text-white rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Changelog</h3>
+          <p class="text-[rgb(var(--color-text-muted))] text-sm mb-4">
+            Track every change and improvement to Claude Code
+          </p>
+          <a
+            href="/changelog"
+            class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+          >
+            View Changelog →
+          </a>
+        </Card>
+
+        <Card hover class="p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-[rgb(var(--color-clay))] text-white rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Releases</h3>
+          <p class="text-[rgb(var(--color-text-muted))] text-sm mb-4">
+            Download the latest versions and release notes
+          </p>
+          <a
+            href="https://github.com/anthropics/claude-code/releases"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+          >
+            View Releases →
+          </a>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 border-t border-[rgb(var(--color-border))]">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <Card class="p-12 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[rgba(var(--color-clay),0.05)] to-transparent"></div>
+        <div class="relative z-10">
+          <h2 class="text-3xl md:text-4xl font-mono font-bold mb-4">
+            Share Your Knowledge
+          </h2>
+          <p class="text-xl text-[rgb(var(--color-text-muted))] mb-8 max-w-2xl mx-auto">
+            Help the community by writing about your experiences with Claude Code.
+            Submit a post via GitHub pull request.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button href="/contribute" variant="primary" size="lg">
+              Contribute a Post
+            </Button>
+            <Button href="https://github.com/alonw0/claude-code-blog" variant="secondary" size="lg">
+              View on GitHub
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

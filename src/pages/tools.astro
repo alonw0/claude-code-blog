@@ -1,0 +1,842 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Tools & Extensions | Claude Code Blog"
+  description="A comprehensive directory of skills, plugins, MCP servers, and tools to supercharge your Claude Code workflow"
+>
+  <div class="container mx-auto px-4 py-12 max-w-5xl">
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-mono text-clay">
+        Tools & Extensions
+      </h1>
+      <p class="text-lg text-muted leading-relaxed">
+        A curated directory of skills, plugins, workflows, and tools from the Claude Code community.
+        Based on <a href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline">awesome-claude-code</a>.
+      </p>
+    </div>
+
+    <!-- Quick Navigation -->
+    <nav class="mb-12 p-6 bg-surface/50 border border-border rounded-lg">
+      <h2 class="text-xl font-mono font-semibold mb-4">Quick Jump</h2>
+      <ul class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+        <li><a href="#agent-skills" class="text-clay hover:underline">Agent Skills</a></li>
+        <li><a href="#workflows" class="text-clay hover:underline">Workflows</a></li>
+        <li><a href="#tooling" class="text-clay hover:underline">General Tooling</a></li>
+        <li><a href="#ide-integrations" class="text-clay hover:underline">IDE Integrations</a></li>
+        <li><a href="#usage-monitors" class="text-clay hover:underline">Usage Monitors</a></li>
+        <li><a href="#orchestrators" class="text-clay hover:underline">Orchestrators</a></li>
+        <li><a href="#hooks" class="text-clay hover:underline">Hooks</a></li>
+        <li><a href="#status-lines" class="text-clay hover:underline">Status Lines</a></li>
+        <li><a href="#plugins" class="text-clay hover:underline">Plugins</a></li>
+        <li><a href="#mcp-servers" class="text-clay hover:underline">MCP Servers</a></li>
+        <li><a href="#slash-commands" class="text-clay hover:underline">Slash Commands</a></li>
+        <li><a href="#create-your-own" class="text-clay hover:underline">Create Your Own</a></li>
+      </ul>
+    </nav>
+
+    <!-- What Are These? -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">What Are These?</h2>
+
+      <div class="space-y-4">
+        <div class="p-5 bg-surface/50 border border-border rounded-lg">
+          <h3 class="text-lg font-mono font-semibold mb-2 text-clay">Skills</h3>
+          <p class="text-muted text-sm leading-relaxed">
+            Markdown documents containing instructions and domain knowledge that Claude can access on-demand.
+          </p>
+        </div>
+
+        <div class="p-5 bg-surface/50 border border-border rounded-lg">
+          <h3 class="text-lg font-mono font-semibold mb-2 text-clay">Workflows</h3>
+          <p class="text-muted text-sm leading-relaxed">
+            Structured approaches and command collections for managing development processes.
+          </p>
+        </div>
+
+        <div class="p-5 bg-surface/50 border border-border rounded-lg">
+          <h3 class="text-lg font-mono font-semibold mb-2 text-clay">Plugins</h3>
+          <p class="text-muted text-sm leading-relaxed">
+            Installable packages that extend Claude Code's functionality with new commands and integrations.
+          </p>
+        </div>
+
+        <div class="p-5 bg-surface/50 border border-border rounded-lg">
+          <h3 class="text-lg font-mono font-semibold mb-2 text-clay">MCP Servers</h3>
+          <p class="text-muted text-sm leading-relaxed">
+            Model Context Protocol servers that give Claude access to external tools, APIs, and data sources.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Agent Skills -->
+    <section id="agent-skills" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Agent Skills</h2>
+      <p class="text-muted mb-6 text-sm">Skills that extend Claude's agent capabilities.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold text-clay">Codex Skill</h3>
+            <span class="text-xs bg-purple-500/10 text-purple-400 px-2 py-1 rounded">Community</span>
+          </div>
+          <p class="text-muted text-sm mb-3">
+            Enables users to prompt codex from Claude Code with parameter inference and session continuation.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Agent</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Codex</span>
+          </div>
+          <a href="https://github.com/skills-directory/skill-codex" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold text-clay">Web Assets Generator Skill</h3>
+            <span class="text-xs bg-purple-500/10 text-purple-400 px-2 py-1 rounded">Community</span>
+          </div>
+          <p class="text-muted text-sm mb-3">
+            Generates favicons, app icons (PWA), and social media meta images with proper HTML meta tags.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Assets</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Icons</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Design</span>
+          </div>
+          <a href="https://github.com/alonw0/web-asset-generator" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workflows & Guides -->
+    <section id="workflows" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Workflows & Guides</h2>
+      <p class="text-muted mb-6 text-sm">Structured development workflows and comprehensive command collections.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">AB Method</h3>
+          <p class="text-muted text-sm mb-3">
+            Spec-driven workflow that transforms large problems into focused missions.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Workflow</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Methodology</span>
+          </div>
+          <a href="https://github.com/ayoubben18/ab-method" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Claude Code PM</h3>
+          <p class="text-muted text-sm mb-3">
+            Comprehensive and feature-packed project-management workflow with agents and slash commands.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Project Management</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Agents</span>
+          </div>
+          <a href="https://github.com/automazeio/ccpm" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">RIPER Workflow</h3>
+          <p class="text-muted text-sm mb-3">
+            Structured development workflow enforcing Research, Innovate, Plan, Execute, Review.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Workflow</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">SDLC</span>
+          </div>
+          <a href="https://github.com/tony/claude-code-riper-5" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">ClaudoPro Directory</h3>
+          <p class="text-muted text-sm mb-3">
+            Wide selection of hooks, slash commands, and subagent files.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Commands</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Hooks</span>
+          </div>
+          <a href="https://github.com/JSONbored/claudepro-directory" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Simone</h3>
+          <p class="text-muted text-sm mb-3">
+            Broader project management workflow encompassing documents, guidelines, and processes.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Project Management</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Documentation</span>
+          </div>
+          <a href="https://github.com/Helmi/claude-simone" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Claude Code Infrastructure Showcase</h3>
+          <p class="text-muted text-sm mb-3">
+            Technique leveraging hooks for intelligent skill selection based on context.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Infrastructure</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Hooks</span>
+          </div>
+          <a href="https://github.com/diet103/claude-code-infrastructure-showcase" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Claude Code Templates</h3>
+          <p class="text-muted text-sm mb-3">
+            Incredibly awesome collection of resources from every category with polished UI.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Templates</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Collection</span>
+          </div>
+          <a href="https://github.com/davila7/claude-code-templates" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- General Tooling -->
+    <section id="tooling" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">General Tooling</h2>
+      <p class="text-muted mb-6 text-sm">CLI utilities and tools that enhance Claude Code functionality.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">cchistory</h3>
+          <p class="text-muted text-sm mb-3">
+            Like the shell history command but for Claude Code sessions.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">CLI</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">History</span>
+          </div>
+          <a href="https://github.com/eckardt/cchistory" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">cclogviewer</h3>
+          <p class="text-muted text-sm mb-3">
+            Utility for viewing Claude Code conversation files in HTML UI.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Viewer</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">UI</span>
+          </div>
+          <a href="https://github.com/Brads3290/cclogviewer" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">ccexp</h3>
+          <p class="text-muted text-sm mb-3">
+            Interactive CLI tool for discovering and managing Claude Code configuration files.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">CLI</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Config</span>
+          </div>
+          <a href="https://github.com/nyatinte/ccexp" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">claudekit</h3>
+          <p class="text-muted text-sm mb-3">
+            Impressive CLI toolkit with auto-save, code quality hooks, and 20+ specialized subagents.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Toolkit</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Automation</span>
+          </div>
+          <a href="https://github.com/carlrannaberg/claudekit" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">cc-tools</h3>
+          <p class="text-muted text-sm mb-3">
+            High-performance Go implementation of Claude Code hooks and utilities.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Go</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Performance</span>
+          </div>
+          <a href="https://github.com/Veraticus/cc-tools" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Claude Hub</h3>
+          <p class="text-muted text-sm mb-3">
+            Webhook service that connects Claude Code to GitHub repositories.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">GitHub</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Integration</span>
+          </div>
+          <a href="https://github.com/claude-did-this/claude-hub" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">ccoutputstyles</h3>
+          <p class="text-muted text-sm mb-3">
+            CLI tool with template gallery for customizing Claude's output styles.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Output Styles</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Templates</span>
+          </div>
+          <div class="flex gap-4 text-sm">
+            <a href="https://github.com/viveknair/ccoutputstyles" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline">GitHub ↗</a>
+            <a href="https://ccoutputstyles.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline">Gallery ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IDE Integrations -->
+    <section id="ide-integrations" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">IDE Integrations</h2>
+      <p class="text-muted mb-6 text-sm">Editor plugins and integrations for seamless Claude Code workflows.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">claude-code.nvim</h3>
+          <p class="text-muted text-sm mb-3">
+            Seamless integration between Claude Code and Neovim.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Neovim</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Plugin</span>
+          </div>
+          <a href="https://github.com/greggh/claude-code.nvim" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">claude-code.el</h3>
+          <p class="text-muted text-sm mb-3">
+            Emacs interface for Claude Code CLI.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Emacs</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Plugin</span>
+          </div>
+          <a href="https://github.com/stevemolitor/claude-code.el" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Crystal</h3>
+          <p class="text-muted text-sm mb-3">
+            Full-fledged desktop application for orchestrating Claude Code agents.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Desktop</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">GUI</span>
+          </div>
+          <a href="https://github.com/stravu/crystal" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Claude Code Chat (VS Code)</h3>
+          <p class="text-muted text-sm mb-3">
+            Elegant user-friendly Claude Code chat interface for VS Code.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">VS Code</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Extension</span>
+          </div>
+          <a href="https://github.com/andrepimenta/claude-code-chat" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Usage Monitors -->
+    <section id="usage-monitors" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Usage Monitors</h2>
+      <p class="text-muted mb-6 text-sm">Tools for tracking and analyzing Claude Code usage and token consumption.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">ccflare</h3>
+          <p class="text-muted text-sm mb-3">
+            Claude Code usage dashboard with comprehensive web UI.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Dashboard</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Web UI</span>
+          </div>
+          <a href="https://github.com/snipeship/ccflare" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">CC Usage</h3>
+          <p class="text-muted text-sm mb-3">
+            Handy CLI tool for managing and analyzing Claude Code usage.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">CLI</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Analytics</span>
+          </div>
+          <a href="https://github.com/ryoppippi/ccusage" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Claudex</h3>
+          <p class="text-muted text-sm mb-3">
+            Web-based browser for exploring Claude Code conversation history.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">History</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Web UI</span>
+          </div>
+          <a href="https://github.com/kunwar-shah/claudex" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Orchestrators -->
+    <section id="orchestrators" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Orchestrators</h2>
+      <p class="text-muted mb-6 text-sm">Tools for managing multiple Claude Code instances and parallel workflows.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Claude Squad</h3>
+          <p class="text-muted text-sm mb-3">
+            Terminal app managing multiple Claude Code instances in separate workspaces.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Multi-Instance</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Orchestration</span>
+          </div>
+          <a href="https://github.com/smtg-ai/claude-squad" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Happy Coder</h3>
+          <p class="text-muted text-sm mb-3">
+            Spawn and control multiple Claude Codes in parallel from mobile or desktop.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Parallel</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Mobile</span>
+          </div>
+          <div class="flex gap-4 text-sm">
+            <a href="https://github.com/slopus/happy" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline">GitHub ↗</a>
+            <a href="https://happy.engineering/" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline">Website ↗</a>
+          </div>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Claude Swarm</h3>
+          <p class="text-muted text-sm mb-3">
+            Launch Claude Code session connected to agent swarm.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Swarm</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Agents</span>
+          </div>
+          <a href="https://github.com/parruda/claude-swarm" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">TSK - AI Agent Task Manager</h3>
+          <p class="text-muted text-sm mb-3">
+            Rust CLI delegating tasks to AI agents in Docker sandboxes.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Rust</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Docker</span>
+          </div>
+          <a href="https://github.com/dtormoen/tsk" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hooks -->
+    <section id="hooks" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Hooks</h2>
+      <p class="text-muted mb-6 text-sm">SDKs and libraries for building custom Claude Code hooks.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">cchooks</h3>
+          <p class="text-muted text-sm mb-3">
+            Lightweight Python SDK simplifying hook writing.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Python</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">SDK</span>
+          </div>
+          <a href="https://github.com/GowayLee/cchooks" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">claude-hooks-sdk</h3>
+          <p class="text-muted text-sm mb-3">
+            Laravel-inspired PHP SDK for building hook responses.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">PHP</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">SDK</span>
+          </div>
+          <a href="https://github.com/beyondcode/claude-hooks-sdk" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">claude-hooks</h3>
+          <p class="text-muted text-sm mb-3">
+            TypeScript-based system for configuring Claude Code hooks.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">TypeScript</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">SDK</span>
+          </div>
+          <a href="https://github.com/johnlindquist/claude-hooks" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Status Lines -->
+    <section id="status-lines" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Status Lines</h2>
+      <p class="text-muted mb-6 text-sm">Customizable status line formatters with themes and tracking.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">claudia-statusline</h3>
+          <p class="text-muted text-sm mb-3">
+            High-performance Rust-based statusline with persistent stats.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Rust</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Performance</span>
+          </div>
+          <a href="https://github.com/hagan/claudia-statusline" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">claude-powerline</h3>
+          <p class="text-muted text-sm mb-3">
+            Vim-style powerline statusline with real-time usage tracking.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Powerline</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Tracking</span>
+          </div>
+          <a href="https://github.com/Owloops/claude-powerline" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">ccstatusline</h3>
+          <p class="text-muted text-sm mb-3">
+            Highly customizable status line formatter displaying model info.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Customizable</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Themes</span>
+          </div>
+          <a href="https://github.com/sirmalloc/ccstatusline" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Plugins -->
+    <section id="plugins" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Plugins</h2>
+      <p class="text-muted mb-6 text-sm">Installable packages that extend Claude Code's capabilities.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold text-clay">Frontend Design Plugin</h3>
+            <span class="text-xs bg-clay/10 text-clay px-2 py-1 rounded">Official</span>
+          </div>
+          <p class="text-muted text-sm mb-3">
+            Integrates the frontend design skill directly into Claude Code for automatic design guidance.
+            Fights "AI Slop" by avoiding generic designs (Inter fonts, purple gradients).
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Design</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Frontend</span>
+          </div>
+          <a href="https://www.claude.com/blog/improving-frontend-design-through-skills" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            Official Blog Post ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold text-clay">LLM Docs Optimizer</h3>
+            <span class="text-xs bg-purple-500/10 text-purple-400 px-2 py-1 rounded">Community</span>
+          </div>
+          <p class="text-muted text-sm mb-3">
+            Optimize documentation for AI coding assistants. Improves docs through c7score optimization,
+            llms.txt generation, and automated quality scoring.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Documentation</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Optimization</span>
+          </div>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold text-clay">Web Asset Generator</h3>
+            <span class="text-xs bg-purple-500/10 text-purple-400 px-2 py-1 rounded">Community</span>
+          </div>
+          <p class="text-muted text-sm mb-3">
+            Generate favicons, app icons (PWA), and social media meta images. Handles image
+            resizing, text-to-image generation, and provides proper HTML meta tags.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Assets</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Icons</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MCP Servers -->
+    <section id="mcp-servers" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">MCP Servers</h2>
+      <p class="text-muted mb-6 text-sm">
+        Model Context Protocol servers that give Claude access to external tools and data.
+      </p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Memory MCP</h3>
+          <p class="text-muted text-sm mb-3">
+            Track project-specific decisions and architectural choices. Maintains context across sessions.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Context</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Memory</span>
+          </div>
+        </div>
+
+        <div class="p-5 bg-surface/50 border border-border rounded-lg">
+          <p class="text-muted text-sm mb-2">
+            <strong>Learn more about MCP:</strong>
+          </p>
+          <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            Model Context Protocol Documentation ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slash Commands -->
+    <section id="slash-commands" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Slash Commands</h2>
+      <p class="text-muted mb-6 text-sm">Popular slash commands for version control, testing, and documentation.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">/commit</h3>
+          <p class="text-muted text-sm mb-3">
+            Creates git commits using conventional commit format.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Git</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Conventional Commits</span>
+          </div>
+          <a href="https://github.com/evmts/tevm-monorepo" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">/create-pr</h3>
+          <p class="text-muted text-sm mb-3">
+            Streamlines PR creation handling entire workflow.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Git</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Pull Requests</span>
+          </div>
+          <a href="https://github.com/toyamarinyon/giselle" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">/tdd</h3>
+          <p class="text-muted text-sm mb-3">
+            Guides Test-Driven Development principles.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Testing</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">TDD</span>
+          </div>
+          <a href="https://github.com/zscott/pane" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg hover:border-clay transition-colors">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">/docs</h3>
+          <p class="text-muted text-sm mb-3">
+            Generates documentation following project structure.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Documentation</span>
+            <span class="text-xs bg-surface border border-border px-2 py-1 rounded">Generation</span>
+          </div>
+          <a href="https://github.com/slunsford/coffee-analytics" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface/50 border border-border rounded-lg text-center">
+          <p class="text-muted text-sm mb-2">
+            <strong>Explore 30+ more slash commands:</strong>
+          </p>
+          <a href="https://github.com/hesreallyhim/awesome-claude-code#slash-commands" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            View Full List on awesome-claude-code ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Create Your Own -->
+    <section id="create-your-own" class="mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-6">Create Your Own</h2>
+      <p class="text-muted mb-6 text-sm">Resources for building custom skills, commands, and hooks.</p>
+
+      <div class="space-y-3">
+        <div class="p-5 bg-surface border border-border rounded-lg">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Official Documentation</h3>
+          <p class="text-muted text-sm mb-3">
+            Comprehensive guides on skills, plugins, slash commands, hooks, and extending Claude Code.
+          </p>
+          <a href="https://docs.claude.com/en/docs/claude-code" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            View Docs ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">Anthropic Quickstarts</h3>
+          <p class="text-muted text-sm mb-3">
+            Comprehensive development guides for demo projects and getting started tutorials.
+          </p>
+          <a href="https://github.com/anthropics/quickstarts" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="p-5 bg-surface border border-border rounded-lg">
+          <h3 class="text-lg font-mono font-semibold text-clay mb-2">awesome-claude-code Repository</h3>
+          <p class="text-muted text-sm mb-3">
+            Community-curated list of 250+ tools, workflows, and resources.
+          </p>
+          <a href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank" rel="noopener noreferrer" class="text-clay hover:underline text-sm">
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contribute -->
+    <section class="p-8 bg-clay/5 border border-clay/20 rounded-lg text-center">
+      <h2 class="text-2xl font-mono font-bold mb-4">Know a Great Tool?</h2>
+      <p class="text-muted mb-6 max-w-2xl mx-auto text-sm">
+        Help the community by contributing to the awesome-claude-code repository or submitting
+        suggestions for this directory.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="https://github.com/hesreallyhim/awesome-claude-code"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="inline-block px-6 py-3 bg-clay text-white font-mono rounded hover:bg-clay-dark transition-colors text-sm">
+          Contribute to awesome-claude-code
+        </a>
+        <a href="https://github.com/alonw0/claude-code-blog/issues/new"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="inline-block px-6 py-3 border border-clay text-clay font-mono rounded hover:bg-clay/10 transition-colors text-sm">
+          Suggest a Tool for This Site
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Smooth scroll for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Add spacing for anchor targets */
+  section[id] {
+    scroll-margin-top: 2rem;
+  }
+</style>

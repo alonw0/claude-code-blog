@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout title="Contribute - Claude Code Blog" description="Learn how to contribute blog posts to the Claude Code community.">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero -->
+    <div class="max-w-4xl mx-auto text-center mb-16">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-mono font-bold mb-6">
+        Share Your <span class="text-[rgb(var(--color-clay))]">Knowledge</span>
+      </h1>
+      <p class="text-xl text-[rgb(var(--color-text-muted))] mb-8">
+        Help the Claude Code community by writing about your experiences, tips, and insights.
+        All contributions are welcome!
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button href="https://github.com/alonw0/claude-code-blog" variant="primary" size="lg">
+          View on GitHub
+        </Button>
+        <Button href="https://github.com/alonw0/claude-code-blog/blob/main/CONTRIBUTING.md" variant="secondary" size="lg">
+          Read Guidelines
+        </Button>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-8 text-center">How It Works</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <Card class="p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-[rgb(var(--color-clay))] text-white rounded-full flex items-center justify-center font-mono font-bold text-xl">
+            1
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Fork & Write</h3>
+          <p class="text-[rgb(var(--color-text-muted))]">
+            Fork the repository and create your blog post as a Markdown or MDX file.
+          </p>
+        </Card>
+
+        <Card class="p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-[rgb(var(--color-clay))] text-white rounded-full flex items-center justify-center font-mono font-bold text-xl">
+            2
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Submit PR</h3>
+          <p class="text-[rgb(var(--color-text-muted))]">
+            Open a pull request with your post and author profile.
+          </p>
+        </Card>
+
+        <Card class="p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-[rgb(var(--color-clay))] text-white rounded-full flex items-center justify-center font-mono font-bold text-xl">
+            3
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Get Published</h3>
+          <p class="text-[rgb(var(--color-text-muted))]">
+            After review, your post will be merged and published to the blog.
+          </p>
+        </Card>
+      </div>
+    </div>
+
+    <!-- Content Guidelines -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-8">Content Guidelines</h2>
+      <Card class="p-8">
+        <div class="space-y-6">
+          <div>
+            <h3 class="font-mono font-semibold text-lg mb-2 text-[rgb(var(--color-clay))]">What We're Looking For</h3>
+            <ul class="space-y-2 text-[rgb(var(--color-text-muted))]">
+              <li>• Tutorials and how-to guides for Claude Code</li>
+              <li>• Tips, tricks, and productivity hacks</li>
+              <li>• Real-world use cases and success stories</li>
+              <li>• Integration guides with other tools</li>
+              <li>• Best practices and patterns</li>
+              <li>• Feature announcements and updates</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-mono font-semibold text-lg mb-2 text-[rgb(var(--color-clay))]">Style Guidelines</h3>
+            <ul class="space-y-2 text-[rgb(var(--color-text-muted))]">
+              <li>• Write in a clear, conversational tone</li>
+              <li>• Include code examples where applicable</li>
+              <li>• Use headings to structure your content</li>
+              <li>• Keep posts between 500-2000 words</li>
+              <li>• Proofread for spelling and grammar</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-mono font-semibold text-lg mb-2 text-[rgb(var(--color-clay))]">AI-Generated Content</h3>
+            <ul class="space-y-2 text-[rgb(var(--color-text-muted))]">
+              <li>• AI-generated content is welcome and encouraged</li>
+              <li>• Please review and verify all AI-generated content before submitting</li>
+              <li>• Acknowledge in your pull request if content was created with AI assistance</li>
+              <li>• You are responsible for the accuracy and quality of submitted content</li>
+              <li>• Edit AI-generated content to match your personal voice and style</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-mono font-semibold text-lg mb-2 text-[rgb(var(--color-clay))]">Technical Requirements</h3>
+            <ul class="space-y-2 text-[rgb(var(--color-text-muted))]">
+              <li>• Posts should be in Markdown (.md) or MDX (.mdx) format</li>
+              <li>• Include required frontmatter (title, description, date, tags, authors)</li>
+              <li>• Create an author profile if you haven't already</li>
+              <li>• Test your post locally before submitting</li>
+            </ul>
+          </div>
+        </div>
+      </Card>
+    </div>
+
+    <!-- Quick Start Template -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-8">Quick Start Template</h2>
+      <Card class="p-8">
+        <p class="text-[rgb(var(--color-text-muted))] mb-4">
+          Copy this template to get started with your blog post:
+        </p>
+        <pre class="bg-[rgb(var(--color-gray-900))] border border-[rgb(var(--color-border))] rounded-lg p-4 overflow-x-auto"><code class="text-sm font-mono text-[rgb(var(--color-text))]">{`---
+title: "Your Post Title"
+description: "A compelling description of your post"
+publishDate: 2025-01-15
+authors: ["alonw0"]
+tags: ["tutorial", "tips"]
+featured: false
+---
+
+# Your Post Title
+
+Write your amazing content here!
+
+## Section 1
+
+Content...
+
+## Section 2
+
+More content...`}</code></pre>
+      </Card>
+    </div>
+
+    <!-- Author Profile -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-8">Create Your Author Profile</h2>
+      <Card class="p-8">
+        <p class="text-[rgb(var(--color-text-muted))] mb-4">
+          Create a file at <code class="text-[rgb(var(--color-clay))] font-mono">src/content/authors/alonw0.md</code>:
+        </p>
+        <pre class="bg-[rgb(var(--color-gray-900))] border border-[rgb(var(--color-border))] rounded-lg p-4 overflow-x-auto"><code class="text-sm font-mono text-[rgb(var(--color-text))]">{`---
+name: "Your Name"
+bio: "A short bio about yourself"
+avatar: "https://your-avatar-url.com/image.jpg"
+social:
+  github: "your-github"
+  twitter: "your-twitter"
+  website: "https://your-website.com"
+---`}</code></pre>
+      </Card>
+    </div>
+
+    <!-- FAQ -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-8">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        <Card class="p-6">
+          <h3 class="font-mono font-semibold text-lg mb-2">How long does review take?</h3>
+          <p class="text-[rgb(var(--color-text-muted))]">
+            We aim to review pull requests within 2-3 business days. We'll provide feedback or merge your post.
+          </p>
+        </Card>
+
+        <Card class="p-6">
+          <h3 class="font-mono font-semibold text-lg mb-2">Can I use images in my post?</h3>
+          <p class="text-[rgb(var(--color-text-muted))]">
+            Yes! Add images to <code class="text-[rgb(var(--color-clay))] font-mono">public/images/blog/</code> and reference them in your post.
+          </p>
+        </Card>
+
+        <Card class="p-6">
+          <h3 class="font-mono font-semibold text-lg mb-2">Can I update my post after it's published?</h3>
+          <p class="text-[rgb(var(--color-text-muted))]">
+            Absolutely! Just submit a PR with your updates. We encourage keeping content fresh and accurate.
+          </p>
+        </Card>
+
+        <Card class="p-6">
+          <h3 class="font-mono font-semibold text-lg mb-2">What if I need help?</h3>
+          <p class="text-[rgb(var(--color-text-muted))]">
+            Open an issue on GitHub or join our community discussions. We're here to help!
+          </p>
+        </Card>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="max-w-4xl mx-auto text-center">
+      <Card class="p-12 bg-gradient-to-br from-[rgba(var(--color-clay),0.05)] to-transparent">
+        <h2 class="text-3xl font-mono font-bold mb-4">Ready to Contribute?</h2>
+        <p class="text-xl text-[rgb(var(--color-text-muted))] mb-8">
+          Join our growing community of contributors and help others learn Claude Code.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="https://github.com/alonw0/claude-code-blog/fork" variant="primary" size="lg">
+            Fork on GitHub
+          </Button>
+          <Button href="https://github.com/alonw0/claude-code-blog/issues/new" variant="secondary" size="lg">
+            Ask a Question
+          </Button>
+        </div>
+      </Card>
+    </div>
+  </div>
+</BaseLayout>

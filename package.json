@@ -6,9 +6,20 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check"
   },
   "dependencies": {
-    "astro": "^5.15.8"
+    "@astrojs/mdx": "^4.3.10",
+    "@astrojs/rss": "^4.0.13",
+    "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.15.8",
+    "astro-icon": "^1.1.5",
+    "date-fns": "^4.1.0",
+    "fast-xml-parser": "^5.3.2",
+    "marked": "^17.0.0",
+    "tailwindcss": "^4.1.17"
   }
 }

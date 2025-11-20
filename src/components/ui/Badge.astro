@@ -1,0 +1,22 @@
+---
+interface Props {
+  variant?: 'default' | 'clay' | 'mint';
+  class?: string;
+}
+
+const { variant = 'default', class: className } = Astro.props;
+
+const baseStyles = 'inline-flex items-center px-2.5 py-0.5 text-xs font-mono font-medium rounded-full';
+
+const variantStyles = {
+  default: 'bg-[rgb(var(--color-surface))] text-[rgb(var(--color-text-muted))] border border-[rgb(var(--color-border))]',
+  clay: 'bg-[rgba(var(--color-clay),0.1)] text-[rgb(var(--color-clay))] border border-[rgba(var(--color-clay),0.3)]',
+  mint: 'bg-[rgba(var(--color-mint),0.1)] text-emerald-700 dark:text-emerald-300 border border-[rgba(var(--color-mint),0.3)]',
+};
+
+const classes = `${baseStyles} ${variantStyles[variant]} ${className || ''}`;
+---
+
+<span class={classes}>
+  <slot />
+</span>

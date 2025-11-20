@@ -1,0 +1,274 @@
+---
+import { fetchAnthropicNews } from '../utils/rss';
+import Badge from './ui/Badge.astro';
+import { formatDate } from '../utils/date';
+
+interface Props {
+  limit?: number;
+  compact?: boolean;
+}
+
+const { limit = 10, compact = false } = Astro.props;
+
+// Fetch news at build time
+let newsItems: Awaited<ReturnType<typeof fetchAnthropicNews>> = [];
+try {
+  newsItems = await fetchAnthropicNews(limit);
+} catch (error) {
+  console.error('Failed to fetch Anthropic news:', error);
+}
+---
+
+{newsItems.length > 0 ? (
+  <div class="news-slider-container">
+    {!compact && (
+      <div class="mb-6">
+        <h2 class="text-3xl font-mono font-bold mb-2">Anthropic News</h2>
+        <p class="text-[rgb(var(--color-text-muted))]">
+          Latest announcements and insights from Anthropic
+        </p>
+      </div>
+    )}
+
+    <div class="relative">
+      <!-- Slider Content -->
+      <div class="news-slider overflow-hidden rounded-lg border border-[rgb(var(--color-border))] bg-[rgb(var(--color-surface))]">
+        <div class="news-slides flex transition-transform duration-500 ease-in-out">
+          {newsItems.map((item, index) => (
+            <div class="news-slide flex-shrink-0 w-full p-8" data-slide={index}>
+              <div class="flex flex-col h-full">
+                {/* Category Badge */}
+                {item.category && (
+                  <div class="mb-3">
+                    <Badge variant="clay">{item.category}</Badge>
+                  </div>
+                )}
+
+                {/* Title */}
+                <h3 class="text-2xl font-mono font-bold mb-3 line-clamp-2">
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300"
+                  >
+                    {item.title}
+                  </a>
+                </h3>
+
+                {/* Description */}
+                {item.description && item.description !== item.title && (
+                  <p class="text-[rgb(var(--color-text-muted))] mb-4 line-clamp-3">
+                    {item.description}
+                  </p>
+                )}
+
+                {/* Footer */}
+                <div class="mt-auto pt-4 border-t border-[rgb(var(--color-border))] flex items-center justify-between">
+                  <span class="text-sm text-[rgb(var(--color-text-muted))]">
+                    {formatDate(item.pubDate)}
+                  </span>
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline inline-flex items-center gap-1"
+                  >
+                    Read more
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Navigation Buttons */}
+      {newsItems.length > 1 && (
+        <>
+          <button
+            class="news-prev absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] flex items-center justify-center hover:border-[rgb(var(--color-clay))] hover:bg-[rgb(var(--color-clay))] hover:text-white transition-all duration-300 z-10"
+            aria-label="Previous news"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            class="news-next absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] flex items-center justify-center hover:border-[rgb(var(--color-clay))] hover:bg-[rgb(var(--color-clay))] hover:text-white transition-all duration-300 z-10"
+            aria-label="Next news"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
+    </div>
+
+    {/* Progress Indicators */}
+    {newsItems.length > 1 && (
+      <div class="flex items-center justify-center gap-2 mt-4">
+        {newsItems.map((_, index) => (
+          <button
+            class="news-dot w-2 h-2 rounded-full bg-[rgb(var(--color-border))] transition-all duration-300 hover:bg-[rgb(var(--color-clay))]"
+            data-index={index}
+            aria-label={`Go to news ${index + 1}`}
+          />
+        ))}
+      </div>
+    )}
+
+    {/* View All Link */}
+    {!compact && (
+      <div class="mt-6 text-center">
+        <a
+          href="https://www.anthropic.com/news"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+        >
+          View all news on Anthropic.com
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    )}
+  </div>
+) : (
+  <div class="text-center p-8 border border-[rgb(var(--color-border))] rounded-lg bg-[rgb(var(--color-surface))]">
+    <p class="text-[rgb(var(--color-text-muted))]">
+      Unable to load news at this time.
+    </p>
+  </div>
+)}
+
+<script>
+  // Auto-scrolling carousel logic
+  const sliderContainer = document.querySelector('.news-slider-container');
+  if (!sliderContainer) throw new Error('Slider container not found');
+
+  const slidesWrapper = sliderContainer.querySelector('.news-slides') as HTMLElement;
+  const slides = Array.from(sliderContainer.querySelectorAll('.news-slide'));
+  const prevBtn = sliderContainer.querySelector('.news-prev') as HTMLButtonElement;
+  const nextBtn = sliderContainer.querySelector('.news-next') as HTMLButtonElement;
+  const dots = Array.from(sliderContainer.querySelectorAll('.news-dot')) as HTMLButtonElement[];
+
+  let currentIndex = 0;
+  let autoScrollInterval: number | null = null;
+  const AUTO_SCROLL_DELAY = 5000; // 5 seconds
+
+  function updateSlider(index: number) {
+    currentIndex = index;
+
+    // Update transform
+    if (slidesWrapper) {
+      slidesWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    // Update dots
+    dots.forEach((dot, i) => {
+      if (i === currentIndex) {
+        dot.classList.add('!bg-[rgb(var(--color-clay))]', '!w-6');
+      } else {
+        dot.classList.remove('!bg-[rgb(var(--color-clay))]', '!w-6');
+      }
+    });
+  }
+
+  function nextSlide() {
+    const nextIndex = (currentIndex + 1) % slides.length;
+    updateSlider(nextIndex);
+  }
+
+  function prevSlide() {
+    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateSlider(prevIndex);
+  }
+
+  function startAutoScroll() {
+    if (slides.length <= 1) return;
+
+    autoScrollInterval = window.setInterval(() => {
+      nextSlide();
+    }, AUTO_SCROLL_DELAY);
+  }
+
+  function stopAutoScroll() {
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    }
+  }
+
+  // Event listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      stopAutoScroll();
+      startAutoScroll(); // Restart auto-scroll after manual navigation
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      stopAutoScroll();
+      startAutoScroll(); // Restart auto-scroll after manual navigation
+    });
+  }
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      updateSlider(index);
+      stopAutoScroll();
+      startAutoScroll(); // Restart auto-scroll after manual navigation
+    });
+  });
+
+  // Pause on hover
+  const sliderElement = sliderContainer.querySelector('.news-slider');
+  if (sliderElement) {
+    sliderElement.addEventListener('mouseenter', stopAutoScroll);
+    sliderElement.addEventListener('mouseleave', startAutoScroll);
+  }
+
+  // Initialize
+  updateSlider(0);
+  startAutoScroll();
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', stopAutoScroll);
+</script>
+
+<style>
+  /* Ensure smooth transitions */
+  .news-slides {
+    will-change: transform;
+  }
+
+  /* Active dot styling */
+  .news-dot.active {
+    width: 1.5rem;
+    background-color: rgb(var(--color-clay));
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

@@ -1,0 +1,209 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@layer theme {
+  :root {
+    /* Claude Code Brand Colors */
+    --color-clay: 217 119 87;
+    --color-clay-dark: 193 95 60;
+    --color-crail: 193 95 60;
+    --color-clay-glow: 217 119 87 / 0.5;
+
+    /* Neutrals - Dark Mode */
+    --color-gray-950: 10 10 10;
+    --color-gray-900: 23 23 23;
+    --color-gray-850: 38 38 38;
+    --color-gray-800: 45 45 45;
+    --color-gray-700: 82 82 82;
+    --color-gray-600: 115 115 115;
+
+    /* Neutrals - Light Mode */
+    --color-gray-50: 250 250 250;
+    --color-pampas: 244 243 238;
+    --color-cloudy: 177 173 161;
+
+    /* Accents */
+    --color-mint: 167 243 208;
+    --color-purple-light: 233 213 255;
+
+    /* Semantic Colors */
+    --color-background: var(--color-gray-50);
+    --color-surface: 255 255 255;
+    --color-text: 23 23 23;
+    --color-text-muted: 82 82 82;
+    --color-border: 229 229 229;
+    --color-primary: var(--color-clay);
+
+    /* Typography Scale */
+    --font-mono: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+    --font-serif: 'Crimson Pro', 'Georgia', serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Spacing & Sizing */
+    --header-height: 4rem;
+  }
+
+  :root:where(.dark, .dark *) {
+    --color-background: var(--color-gray-950);
+    --color-surface: var(--color-gray-900);
+    --color-text: 250 250 250;
+    --color-text-muted: 177 173 161;
+    --color-border: var(--color-gray-800);
+  }
+}
+
+/* Custom Variant for Dark Mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Base Styles */
+body {
+  font-family: var(--font-serif);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-text));
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+code {
+  font-family: var(--font-mono);
+}
+
+/* Glass Morphism Utility */
+.glass {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Clay Glow Effect */
+.clay-glow {
+  box-shadow: 0 0 40px rgba(var(--color-clay), 0.3);
+}
+
+/* Animated Shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--color-clay), 0.3),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Stagger Animation Utilities */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Smooth Transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced Prose Styling for Blog Content */
+.prose pre {
+  border: 1px solid rgb(var(--color-border)) !important;
+  border-radius: 0.5rem;
+  padding: 1.5rem !important;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+/* Light mode: light background for code blocks */
+.prose pre {
+  background-color: rgb(250 250 250) !important;
+}
+
+/* Dark mode: dark background for code blocks */
+:root:where(.dark, .dark *) .prose pre {
+  background-color: rgb(var(--color-gray-900)) !important;
+}
+
+/* Shiki dual theme support - override inline styles */
+.prose pre code span {
+  color: var(--shiki-light) !important;
+}
+
+:root:where(.dark, .dark *) .prose pre code span {
+  color: var(--shiki-dark) !important;
+}
+
+.prose code {
+  background-color: rgba(var(--color-clay), 0.1);
+  color: rgb(var(--color-clay));
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.prose pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.prose li {
+  margin: 0.5rem 0;
+  padding-left: 0.5rem;
+}
+
+.prose h1 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  margin: 1rem 0;
+  line-height: 1.75;
+}
+
+.prose blockquote {
+  border-left: 4px solid rgb(var(--color-clay));
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: rgb(var(--color-text-muted));
+}

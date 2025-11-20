@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChangelogViewer from '../components/ChangelogViewer.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Changelog - Claude Code Blog"
+  description="Track every change and improvement to Claude Code. View the complete changelog with version history and release notes."
+>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Back Button -->
+    <div class="mb-8">
+      <Button href="/" variant="ghost" size="sm">
+        ← Back to Home
+      </Button>
+    </div>
+
+    <!-- Changelog Viewer -->
+    <div class="max-w-6xl mx-auto">
+      <ChangelogViewer />
+    </div>
+
+    <!-- Additional Info -->
+    <div class="max-w-6xl mx-auto mt-12 pt-8 border-t border-[rgb(var(--color-border))]">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center p-6 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-lg">
+          <h3 class="font-mono font-semibold text-lg mb-2">Stay Updated</h3>
+          <p class="text-sm text-[rgb(var(--color-text-muted))] mb-4">
+            Subscribe to get notified of new releases
+          </p>
+          <a
+            href="/rss.xml"
+            class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+          >
+            RSS Feed →
+          </a>
+        </div>
+
+        <div class="text-center p-6 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-lg">
+          <h3 class="font-mono font-semibold text-lg mb-2">GitHub Releases</h3>
+          <p class="text-sm text-[rgb(var(--color-text-muted))] mb-4">
+            Download specific versions
+          </p>
+          <a
+            href="https://github.com/anthropics/claude-code/releases"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+          >
+            View Releases →
+          </a>
+        </div>
+
+        <div class="text-center p-6 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-lg">
+          <h3 class="font-mono font-semibold text-lg mb-2">Documentation</h3>
+          <p class="text-sm text-[rgb(var(--color-text-muted))] mb-4">
+            Learn about Claude Code features
+          </p>
+          <a
+            href="https://docs.claude.com/en/docs/claude-code"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+          >
+            Read Docs →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

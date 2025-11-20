@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AuthorCard from '../../components/blog/AuthorCard.astro';
+import { getCollection } from 'astro:content';
+
+// Get all authors
+const allAuthors = await getCollection('authors');
+
+// Get all blog posts to calculate post counts
+const allPosts = await getCollection('blog');
+const publishedPosts = allPosts.filter(post => !post.data.draft);
+
+// Calculate post count for each author
+const authorPostCounts = new Map<string, number>();
+publishedPosts.forEach(post => {
+  post.data.authors.forEach(authorRef => {
+    const authorId = typeof authorRef === 'string' ? authorRef : authorRef.id;
+    authorPostCounts.set(authorId, (authorPostCounts.get(authorId) || 0) + 1);
+  });
+});
+
+// Sort authors by post count (descending) then alphabetically
+const sortedAuthors = allAuthors.sort((a, b) => {
+  const aCount = authorPostCounts.get(a.id) || 0;
+  const bCount = authorPostCounts.get(b.id) || 0;
+
+  if (bCount !== aCount) {
+    return bCount - aCount;
+  }
+
+  return a.data.name.localeCompare(b.data.name);
+});
+---
+
+<BaseLayout title="Authors - Claude Code Blog" description="Meet the contributors to the Claude Code blog.">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <div class="max-w-3xl mb-12">
+      <h1 class="text-4xl md:text-5xl font-mono font-bold mb-4">Authors</h1>
+      <p class="text-xl text-[rgb(var(--color-text-muted))]">
+        Meet the talented contributors sharing their knowledge about Claude Code.
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="mb-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="text-center p-6 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-lg">
+        <div class="text-3xl font-mono font-bold text-[rgb(var(--color-clay))] mb-2">
+          {sortedAuthors.length}
+        </div>
+        <div class="text-sm text-[rgb(var(--color-text-muted))]">
+          {sortedAuthors.length === 1 ? 'Author' : 'Authors'}
+        </div>
+      </div>
+
+      <div class="text-center p-6 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-lg">
+        <div class="text-3xl font-mono font-bold text-[rgb(var(--color-clay))] mb-2">
+          {publishedPosts.length}
+        </div>
+        <div class="text-sm text-[rgb(var(--color-text-muted))]">
+          Total Posts
+        </div>
+      </div>
+
+      <div class="text-center p-6 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-lg">
+        <div class="text-3xl font-mono font-bold text-[rgb(var(--color-clay))] mb-2">
+          {Math.max(...Array.from(authorPostCounts.values()))}
+        </div>
+        <div class="text-sm text-[rgb(var(--color-text-muted))]">
+          Most Posts
+        </div>
+      </div>
+
+      <div class="text-center p-6 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-lg">
+        <div class="text-3xl font-mono font-bold text-[rgb(var(--color-clay))] mb-2">
+          Open
+        </div>
+        <div class="text-sm text-[rgb(var(--color-text-muted))]">
+          To All
+        </div>
+      </div>
+    </div>
+
+    <!-- Authors Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {sortedAuthors.map((author) => (
+        <AuthorCard
+          name={author.data.name}
+          bio={author.data.bio}
+          avatar={author.data.avatar}
+          authorId={author.id}
+          postCount={authorPostCounts.get(author.id) || 0}
+          social={author.data.social}
+        />
+      ))}
+    </div>
+
+    {/* Empty State */}
+    {sortedAuthors.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-xl text-[rgb(var(--color-text-muted))]">
+          No authors yet. Be the first to contribute!
+        </p>
+      </div>
+    )}
+
+    <!-- CTA Section -->
+    <div class="mt-16 pt-12 border-t border-[rgb(var(--color-border))]">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-mono font-bold mb-4">
+          Join Our Community
+        </h2>
+        <p class="text-xl text-[rgb(var(--color-text-muted))] mb-8">
+          Share your expertise and help others learn Claude Code.
+          All contributors are welcome!
+        </p>
+        <a
+          href="/contribute"
+          class="inline-flex items-center justify-center px-6 py-3 text-lg font-mono font-medium bg-[rgb(var(--color-clay))] text-white rounded-lg hover:bg-[rgb(var(--color-clay-dark))] transition-all duration-300 clay-glow hover:scale-105"
+        >
+          Start Contributing
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

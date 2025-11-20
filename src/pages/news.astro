@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsSlider from '../components/NewsSlider.astro';
+import Button from '../components/ui/Button.astro';
+import Card from '../components/ui/Card.astro';
+---
+
+<BaseLayout
+  title="Anthropic News - Claude Code Blog"
+  description="Stay up to date with the latest announcements, insights, and updates from Anthropic."
+>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Back Button -->
+    <div class="mb-8">
+      <Button href="/" variant="ghost" size="sm">
+        ← Back to Home
+      </Button>
+    </div>
+
+    <!-- News Slider -->
+    <div class="max-w-4xl mx-auto">
+      <NewsSlider limit={15} />
+    </div>
+
+    <!-- Additional Resources -->
+    <div class="max-w-4xl mx-auto mt-12 pt-8 border-t border-[rgb(var(--color-border))]">
+      <h3 class="text-2xl font-mono font-bold mb-6 text-center">More from Anthropic</h3>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <Card hover class="p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-[rgb(var(--color-clay))] text-white rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <h4 class="font-mono font-semibold text-lg mb-2">Research Papers</h4>
+          <p class="text-[rgb(var(--color-text-muted))] text-sm mb-4">
+            Explore Anthropic's latest AI safety and alignment research
+          </p>
+          <a
+            href="https://www.anthropic.com/research"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+          >
+            View Research →
+          </a>
+        </Card>
+
+        <Card hover class="p-6 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 bg-[rgb(var(--color-clay))] text-white rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          </div>
+          <h4 class="font-mono font-semibold text-lg mb-2">Company Blog</h4>
+          <p class="text-[rgb(var(--color-text-muted))] text-sm mb-4">
+            Read perspectives from the Anthropic team
+          </p>
+          <a
+            href="https://www.anthropic.com/news"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
+          >
+            Read Blog →
+          </a>
+        </Card>
+      </div>
+
+      <!-- Subscription Info -->
+      <div class="mt-8 p-6 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-lg text-center">
+        <h4 class="font-mono font-semibold text-lg mb-2">Stay in the Loop</h4>
+        <p class="text-[rgb(var(--color-text-muted))] text-sm mb-4">
+          This news feed is automatically updated from Anthropic's official RSS feed
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a
+            href="https://www.anthropic.com/news"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-mono font-medium bg-[rgb(var(--color-clay))] text-white rounded-lg hover:bg-[rgb(var(--color-clay-dark))] transition-all duration-300"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            Subscribe on Anthropic.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
