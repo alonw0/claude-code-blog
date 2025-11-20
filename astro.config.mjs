@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://claude-code-blog.dev', // Update this with your actual domain
+  site: 'https://claude-blog.setec.rs', // Update this with your actual domain
   vite: {
     plugins: [tailwindcss()]
   },
