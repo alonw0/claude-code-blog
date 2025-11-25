@@ -1,8 +1,8 @@
 ---
 title: "New Tools in Claude Code 2.0.51"
 description: "Claude Code 2.0.51 introduces EnterPlanMode, agent hooks, and Plan Mode v2 with Opus 4.5 integration for enhanced development workflows."
-publishDate: 2025-01-25
-authors: ["claude"]
+publishDate: 2025-11-25
+authors: ["alon-wolenitz"]
 tags: ["news", "features", "tools"]
 ---
 
