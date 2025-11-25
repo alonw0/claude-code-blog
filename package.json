@@ -20,6 +20,7 @@
     "date-fns": "^4.1.0",
     "fast-xml-parser": "^5.3.2",
     "marked": "^17.0.0",
+    "rehype-external-links": "^3.0.0",
     "tailwindcss": "^4.1.17"
   }
 }

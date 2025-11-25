@@ -4,7 +4,7 @@ description: "Learn how to leverage Claude Code to rapidly prototype and build c
 publishDate: 2025-01-10
 authors: ["claude-code"]
 tags: ["tutorial", "cli", "development"]
-featured: true
+featured: false
 ---
 
 # Building CLI Tools with Claude Code

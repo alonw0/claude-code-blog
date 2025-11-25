@@ -38,53 +38,100 @@ const allTags = [...new Set(publishedPosts.flatMap(post => post.data.tags))].sor
 
     <!-- Posts Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {publishedPosts.map((post) => (
-        <Card hover class="p-6 flex flex-col h-full">
-          <div class="flex-1">
-            {/* Tags */}
-            <div class="flex flex-wrap gap-2 mb-3">
-              {post.data.tags.slice(0, 3).map((tag) => (
-                <a href={`/blog/tag/${tag}`}>
-                  <Badge variant={post.data.featured ? 'clay' : 'default'}>
-                    {tag}
+      {publishedPosts.map((post) => {
+        const isExternal = !!post.data.externalUrl;
+        const isVideo = !!post.data.youtubeUrl;
+        const postUrl = isExternal ? post.data.externalUrl : `/blog/${post.id}`;
+        const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+        const badgeCount = (isExternal || isVideo) ? 2 : 3;
+
+        return (
+          <Card hover class="p-6 flex flex-col h-full">
+            <div class="flex-1">
+              {/* Tags */}
+              <div class="flex flex-wrap gap-2 mb-3">
+                {isVideo && (
+                  <Badge variant="default" class="border-red-500 text-red-600 dark:text-red-400">
+                    <span class="inline-flex items-center gap-1">
+                      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                      Video
+                    </span>
                   </Badge>
+                )}
+                {isExternal && (
+                  <Badge variant="default" class="border-amber-500 text-amber-600 dark:text-amber-400">
+                    External
+                  </Badge>
+                )}
+                {post.data.tags.slice(0, badgeCount).map((tag) => (
+                  <a href={`/blog/tag/${tag}`}>
+                    <Badge variant={post.data.featured ? 'clay' : 'default'}>
+                      {tag}
+                    </Badge>
+                  </a>
+                ))}
+                {post.data.featured && (
+                  <Badge variant="mint">Featured</Badge>
+                )}
+              </div>
+
+              {/* Title */}
+              <h2 class="text-xl font-mono font-semibold mb-2">
+                <a
+                  href={postUrl}
+                  {...linkProps}
+                  class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300 inline-flex items-center gap-1"
+                >
+                  {isVideo && (
+                    <svg class="w-5 h-5 flex-shrink-0 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                    </svg>
+                  )}
+                  {post.data.title}
+                  {isExternal && (
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  )}
                 </a>
-              ))}
-              {post.data.featured && (
-                <Badge variant="mint">Featured</Badge>
+              </h2>
+
+              {/* Source Attribution for External */}
+              {isExternal && post.data.source && (
+                <p class="text-xs text-[rgb(var(--color-text-muted))] mb-2 font-mono">
+                  via {post.data.source}
+                </p>
               )}
+
+              {/* Description */}
+              <p class="text-[rgb(var(--color-text-muted))] mb-4">
+                {post.data.description}
+              </p>
             </div>
 
-            {/* Title */}
-            <h2 class="text-xl font-mono font-semibold mb-2">
+            {/* Footer */}
+            <div class="flex items-center justify-between pt-4 border-t border-[rgb(var(--color-border))]">
+              <span class="text-sm text-[rgb(var(--color-text-muted))]">
+                {formatDate(post.data.publishDate)}
+              </span>
               <a
-                href={`/blog/${post.id}`}
-                class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300"
+                href={postUrl}
+                {...linkProps}
+                class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline inline-flex items-center gap-1"
               >
-                {post.data.title}
+                {isVideo ? 'Watch video' : isExternal ? 'Read on ' + (post.data.source || 'external site') : 'Read more'}
+                {isExternal ? (
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                ) : ' →'}
               </a>
-            </h2>
-
-            {/* Description */}
-            <p class="text-[rgb(var(--color-text-muted))] mb-4">
-              {post.data.description}
-            </p>
-          </div>
-
-          {/* Footer */}
-          <div class="flex items-center justify-between pt-4 border-t border-[rgb(var(--color-border))]">
-            <span class="text-sm text-[rgb(var(--color-text-muted))]">
-              {formatDate(post.data.publishDate)}
-            </span>
-            <a
-              href={`/blog/${post.id}`}
-              class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline"
-            >
-              Read more →
-            </a>
-          </div>
-        </Card>
-      ))}
+            </div>
+          </Card>
+        );
+      })}
     </div>
 
     {/* Empty State */}

@@ -4,7 +4,7 @@ description: "A comprehensive guide to installing and using Claude Code, the off
 publishDate: 2025-01-15
 authors: ["claude-code"]
 tags: ["getting-started", "tutorial", "cli"]
-featured: true
+featured: false
 ---
 
 # Getting Started with Claude Code

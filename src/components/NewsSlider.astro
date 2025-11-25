@@ -1,7 +1,5 @@
 ---
-import { fetchAnthropicNews } from '../utils/rss';
 import Badge from './ui/Badge.astro';
-import { formatDate } from '../utils/date';
 
 interface Props {
   limit?: number;
@@ -9,120 +7,71 @@ interface Props {
 }
 
 const { limit = 10, compact = false } = Astro.props;
-
-// Fetch news at build time
-let newsItems: Awaited<ReturnType<typeof fetchAnthropicNews>> = [];
-try {
-  newsItems = await fetchAnthropicNews(limit);
-} catch (error) {
-  console.error('Failed to fetch Anthropic news:', error);
-}
 ---
 
-{newsItems.length > 0 ? (
-  <div class="news-slider-container">
-    {!compact && (
-      <div class="mb-6">
-        <h2 class="text-3xl font-mono font-bold mb-2">Anthropic News</h2>
-        <p class="text-[rgb(var(--color-text-muted))]">
-          Latest announcements and insights from Anthropic
-        </p>
-      </div>
-    )}
+<div class="news-slider-container" data-limit={limit} data-compact={compact}>
+  <!-- Header (always shown) -->
+  {!compact && (
+    <div class="mb-6">
+      <h2 class="text-3xl font-mono font-bold mb-2">Anthropic News</h2>
+      <p class="text-[rgb(var(--color-text-muted))]">
+        Latest announcements and insights from Anthropic
+      </p>
+    </div>
+  )}
 
+  <!-- Loading State -->
+  <div class="news-loading">
+    <div class="text-center p-16 border border-[rgb(var(--color-border))] rounded-lg bg-[rgb(var(--color-surface))]">
+      <div class="inline-block w-8 h-8 border-4 border-[rgb(var(--color-border))] border-t-[rgb(var(--color-clay))] rounded-full animate-spin mb-4"></div>
+      <p class="text-[rgb(var(--color-text-muted))] font-mono">Loading latest news...</p>
+    </div>
+  </div>
+
+  <!-- Error State (hidden by default) -->
+  <div class="news-error hidden">
+    <div class="text-center p-8 border border-[rgb(var(--color-border))] rounded-lg bg-[rgb(var(--color-surface))]">
+      <p class="text-[rgb(var(--color-text-muted))]">
+        Unable to load news at this time.
+      </p>
+    </div>
+  </div>
+
+  <!-- Content Container (populated by JavaScript) -->
+  <div class="news-content hidden">
     <div class="relative">
-      <!-- Slider Content -->
+      <!-- Slider Content (populated dynamically) -->
       <div class="news-slider overflow-hidden rounded-lg border border-[rgb(var(--color-border))] bg-[rgb(var(--color-surface))]">
         <div class="news-slides flex transition-transform duration-500 ease-in-out">
-          {newsItems.map((item, index) => (
-            <div class="news-slide flex-shrink-0 w-full p-8" data-slide={index}>
-              <div class="flex flex-col h-full">
-                {/* Category Badge */}
-                {item.category && (
-                  <div class="mb-3">
-                    <Badge variant="clay">{item.category}</Badge>
-                  </div>
-                )}
-
-                {/* Title */}
-                <h3 class="text-2xl font-mono font-bold mb-3 line-clamp-2">
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300"
-                  >
-                    {item.title}
-                  </a>
-                </h3>
-
-                {/* Description */}
-                {item.description && item.description !== item.title && (
-                  <p class="text-[rgb(var(--color-text-muted))] mb-4 line-clamp-3">
-                    {item.description}
-                  </p>
-                )}
-
-                {/* Footer */}
-                <div class="mt-auto pt-4 border-t border-[rgb(var(--color-border))] flex items-center justify-between">
-                  <span class="text-sm text-[rgb(var(--color-text-muted))]">
-                    {formatDate(item.pubDate)}
-                  </span>
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline inline-flex items-center gap-1"
-                  >
-                    Read more
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
+          <!-- Slides will be inserted here -->
         </div>
       </div>
 
-      {/* Navigation Buttons */}
-      {newsItems.length > 1 && (
-        <>
-          <button
-            class="news-prev absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] flex items-center justify-center hover:border-[rgb(var(--color-clay))] hover:bg-[rgb(var(--color-clay))] hover:text-white transition-all duration-300 z-10"
-            aria-label="Previous news"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            class="news-next absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] flex items-center justify-center hover:border-[rgb(var(--color-clay))] hover:bg-[rgb(var(--color-clay))] hover:text-white transition-all duration-300 z-10"
-            aria-label="Next news"
-          >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </>
-      )}
+      <!-- Navigation Buttons (shown dynamically) -->
+      <button
+        class="news-prev hidden absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] items-center justify-center hover:border-[rgb(var(--color-clay))] hover:bg-[rgb(var(--color-clay))] hover:text-white transition-all duration-300 z-10"
+        aria-label="Previous news"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button
+        class="news-next hidden absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] items-center justify-center hover:border-[rgb(var(--color-clay))] hover:bg-[rgb(var(--color-clay))] hover:text-white transition-all duration-300 z-10"
+        aria-label="Next news"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
 
-    {/* Progress Indicators */}
-    {newsItems.length > 1 && (
-      <div class="flex items-center justify-center gap-2 mt-4">
-        {newsItems.map((_, index) => (
-          <button
-            class="news-dot w-2 h-2 rounded-full bg-[rgb(var(--color-border))] transition-all duration-300 hover:bg-[rgb(var(--color-clay))]"
-            data-index={index}
-            aria-label={`Go to news ${index + 1}`}
-          />
-        ))}
-      </div>
-    )}
+    <!-- Progress Indicators (populated dynamically) -->
+    <div class="news-dots flex items-center justify-center gap-2 mt-4">
+      <!-- Dots will be inserted here -->
+    </div>
 
-    {/* View All Link */}
+    <!-- View All Link -->
     {!compact && (
       <div class="mt-6 text-center">
         <a
@@ -139,110 +88,216 @@ try {
       </div>
     )}
   </div>
-) : (
-  <div class="text-center p-8 border border-[rgb(var(--color-border))] rounded-lg bg-[rgb(var(--color-surface))]">
-    <p class="text-[rgb(var(--color-text-muted))]">
-      Unable to load news at this time.
-    </p>
-  </div>
-)}
+</div>
 
 <script>
-  // Auto-scrolling carousel logic
-  const sliderContainer = document.querySelector('.news-slider-container');
-  if (!sliderContainer) throw new Error('Slider container not found');
+  // Client-side news fetching and carousel logic
+  (() => {
+    const sliderContainer = document.querySelector('.news-slider-container');
+    if (!sliderContainer) return;
 
-  const slidesWrapper = sliderContainer.querySelector('.news-slides') as HTMLElement;
-  const slides = Array.from(sliderContainer.querySelectorAll('.news-slide'));
-  const prevBtn = sliderContainer.querySelector('.news-prev') as HTMLButtonElement;
-  const nextBtn = sliderContainer.querySelector('.news-next') as HTMLButtonElement;
-  const dots = Array.from(sliderContainer.querySelectorAll('.news-dot')) as HTMLButtonElement[];
+    const loadingEl = sliderContainer.querySelector('.news-loading');
+    const errorEl = sliderContainer.querySelector('.news-error');
+    const contentEl = sliderContainer.querySelector('.news-content');
+    const slidesWrapper = sliderContainer.querySelector('.news-slides') as HTMLElement;
+    const dotsContainer = sliderContainer.querySelector('.news-dots') as HTMLElement;
+    const prevBtn = sliderContainer.querySelector('.news-prev') as HTMLButtonElement;
+    const nextBtn = sliderContainer.querySelector('.news-next') as HTMLButtonElement;
 
-  let currentIndex = 0;
-  let autoScrollInterval: number | null = null;
-  const AUTO_SCROLL_DELAY = 5000; // 5 seconds
+    const limit = parseInt(sliderContainer.getAttribute('data-limit') || '10');
 
-  function updateSlider(index: number) {
-    currentIndex = index;
+    let currentIndex = 0;
+    let autoScrollInterval: number | null = null;
+    const AUTO_SCROLL_DELAY = 5000;
 
-    // Update transform
-    if (slidesWrapper) {
-      slidesWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+    // Format date
+    function formatDate(date: Date): string {
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).format(date);
     }
 
-    // Update dots
-    dots.forEach((dot, i) => {
-      if (i === currentIndex) {
-        dot.classList.add('!bg-[rgb(var(--color-clay))]', '!w-6');
-      } else {
-        dot.classList.remove('!bg-[rgb(var(--color-clay))]', '!w-6');
+    // Parse RSS XML (simple DOM parser approach)
+    function parseRSSFeed(xmlText: string) {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+      const items = Array.from(xmlDoc.querySelectorAll('item'));
+
+      return items.map(item => ({
+        title: item.querySelector('title')?.textContent || '',
+        link: item.querySelector('link')?.textContent || '',
+        description: item.querySelector('description')?.textContent || '',
+        pubDate: new Date(item.querySelector('pubDate')?.textContent || ''),
+        category: item.querySelector('category')?.textContent || undefined,
+      })).sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    }
+
+    // Fetch and render news
+    async function fetchAndRenderNews() {
+      try {
+        const response = await fetch('https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_news.xml');
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch RSS feed');
+        }
+
+        const xmlText = await response.text();
+        const newsItems = parseRSSFeed(xmlText).slice(0, limit);
+
+        if (newsItems.length === 0) {
+          throw new Error('No news items found');
+        }
+
+        // Render slides
+        slidesWrapper.innerHTML = newsItems.map((item, index) => `
+          <div class="news-slide flex-shrink-0 w-full px-16 py-8" data-slide="${index}">
+            <div class="flex flex-col h-full">
+              ${item.category ? `
+                <div class="mb-3">
+                  <span class="inline-flex items-center px-2 py-1 text-xs font-mono font-medium rounded-md bg-[rgba(var(--color-clay),0.1)] text-[rgb(var(--color-clay))] border border-[rgb(var(--color-clay))]">
+                    ${item.category}
+                  </span>
+                </div>
+              ` : ''}
+              <h3 class="text-2xl font-mono font-bold mb-3 line-clamp-2">
+                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="hover:text-[rgb(var(--color-clay))] transition-colors duration-300">
+                  ${item.title}
+                </a>
+              </h3>
+              ${item.description && item.description !== item.title ? `
+                <p class="text-[rgb(var(--color-text-muted))] mb-4 line-clamp-3">
+                  ${item.description}
+                </p>
+              ` : ''}
+              <div class="mt-auto pt-4 border-t border-[rgb(var(--color-border))] flex items-center justify-between">
+                <span class="text-sm text-[rgb(var(--color-text-muted))]">
+                  ${formatDate(item.pubDate)}
+                </span>
+                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-sm font-mono text-[rgb(var(--color-clay))] hover:underline inline-flex items-center gap-1">
+                  Read more
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Render dots
+        if (newsItems.length > 1) {
+          dotsContainer.innerHTML = newsItems.map((_, index) => `
+            <button class="news-dot w-2 h-2 rounded-full bg-[rgb(var(--color-border))] transition-all duration-300 hover:bg-[rgb(var(--color-clay))]" data-index="${index}" aria-label="Go to news ${index + 1}"></button>
+          `).join('');
+        }
+
+        // Show/hide navigation buttons
+        if (newsItems.length > 1) {
+          prevBtn.classList.remove('hidden');
+          prevBtn.classList.add('flex');
+          nextBtn.classList.remove('hidden');
+          nextBtn.classList.add('flex');
+        }
+
+        // Hide loading, show content
+        loadingEl?.classList.add('hidden');
+        contentEl?.classList.remove('hidden');
+
+        // Initialize carousel
+        initializeCarousel();
+      } catch (error) {
+        console.error('Error fetching news:', error);
+        loadingEl?.classList.add('hidden');
+        errorEl?.classList.remove('hidden');
       }
-    });
-  }
-
-  function nextSlide() {
-    const nextIndex = (currentIndex + 1) % slides.length;
-    updateSlider(nextIndex);
-  }
-
-  function prevSlide() {
-    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlider(prevIndex);
-  }
-
-  function startAutoScroll() {
-    if (slides.length <= 1) return;
-
-    autoScrollInterval = window.setInterval(() => {
-      nextSlide();
-    }, AUTO_SCROLL_DELAY);
-  }
-
-  function stopAutoScroll() {
-    if (autoScrollInterval) {
-      clearInterval(autoScrollInterval);
-      autoScrollInterval = null;
     }
-  }
 
-  // Event listeners
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      prevSlide();
-      stopAutoScroll();
-      startAutoScroll(); // Restart auto-scroll after manual navigation
-    });
-  }
+    // Carousel logic
+    function initializeCarousel() {
+      const slides = Array.from(sliderContainer!.querySelectorAll('.news-slide'));
+      const dots = Array.from(sliderContainer!.querySelectorAll('.news-dot')) as HTMLButtonElement[];
 
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      nextSlide();
-      stopAutoScroll();
-      startAutoScroll(); // Restart auto-scroll after manual navigation
-    });
-  }
+      function updateSlider(index: number) {
+        currentIndex = index;
+        if (slidesWrapper) {
+          slidesWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+        dots.forEach((dot, i) => {
+          if (i === currentIndex) {
+            dot.classList.add('!bg-[rgb(var(--color-clay))]', '!w-6');
+          } else {
+            dot.classList.remove('!bg-[rgb(var(--color-clay))]', '!w-6');
+          }
+        });
+      }
 
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      updateSlider(index);
-      stopAutoScroll();
-      startAutoScroll(); // Restart auto-scroll after manual navigation
-    });
-  });
+      function nextSlide() {
+        const nextIndex = (currentIndex + 1) % slides.length;
+        updateSlider(nextIndex);
+      }
 
-  // Pause on hover
-  const sliderElement = sliderContainer.querySelector('.news-slider');
-  if (sliderElement) {
-    sliderElement.addEventListener('mouseenter', stopAutoScroll);
-    sliderElement.addEventListener('mouseleave', startAutoScroll);
-  }
+      function prevSlide() {
+        const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateSlider(prevIndex);
+      }
 
-  // Initialize
-  updateSlider(0);
-  startAutoScroll();
+      function startAutoScroll() {
+        if (slides.length <= 1) return;
+        autoScrollInterval = window.setInterval(nextSlide, AUTO_SCROLL_DELAY);
+      }
 
-  // Cleanup on page unload
-  window.addEventListener('beforeunload', stopAutoScroll);
+      function stopAutoScroll() {
+        if (autoScrollInterval) {
+          clearInterval(autoScrollInterval);
+          autoScrollInterval = null;
+        }
+      }
+
+      // Event listeners
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          prevSlide();
+          stopAutoScroll();
+          startAutoScroll();
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          nextSlide();
+          stopAutoScroll();
+          startAutoScroll();
+        });
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          updateSlider(index);
+          stopAutoScroll();
+          startAutoScroll();
+        });
+      });
+
+      // Pause on hover
+      const sliderElement = sliderContainer!.querySelector('.news-slider');
+      if (sliderElement) {
+        sliderElement.addEventListener('mouseenter', stopAutoScroll);
+        sliderElement.addEventListener('mouseleave', startAutoScroll);
+      }
+
+      // Initialize
+      updateSlider(0);
+      startAutoScroll();
+
+      // Cleanup
+      window.addEventListener('beforeunload', stopAutoScroll);
+    }
+
+    // Fetch news on page load
+    fetchAndRenderNews();
+  })();
 </script>
 
 <style>

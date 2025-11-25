@@ -12,6 +12,7 @@ const authors = defineCollection({
       twitter: z.string().optional(),
       website: z.string().optional(),
       linkedin: z.string().optional(),
+      medium: z.string().optional(),
     }).optional(),
   }),
 });
@@ -27,6 +28,12 @@ const blog = defineCollection({
     image: z.string().optional(),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
+    // External article fields
+    externalUrl: z.string().url().optional(),
+    source: z.string().optional(),
+    originalPublishDate: z.coerce.date().optional(),
+    // YouTube video fields
+    youtubeUrl: z.string().url().optional(),
   }),
 });
 

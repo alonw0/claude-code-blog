@@ -75,6 +75,8 @@ import Button from '../components/ui/Button.astro';
               <li>• Integration guides with other tools</li>
               <li>• Best practices and patterns</li>
               <li>• Feature announcements and updates</li>
+              <li>• YouTube videos and video tutorials</li>
+              <li>• Links to quality external articles</li>
             </ul>
           </div>
 
@@ -140,6 +142,80 @@ Content...
 ## Section 2
 
 More content...`}</code></pre>
+      </Card>
+    </div>
+
+    <!-- External Article Template -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-8">Link to External Articles</h2>
+      <Card class="p-8">
+        <p class="text-[rgb(var(--color-text-muted))] mb-4">
+          Want to share a great Claude Code article published elsewhere? Use this template to add external articles to the blog feed:
+        </p>
+        <pre class="bg-[rgb(var(--color-gray-900))] border border-[rgb(var(--color-border))] rounded-lg p-4 overflow-x-auto"><code class="text-sm font-mono text-[rgb(var(--color-text))]">{`---
+title: "External Article Title"
+description: "A brief summary of the article"
+publishDate: 2025-01-20
+authors: ["your-id"]
+tags: ["tutorial", "external"]
+externalUrl: "https://example.com/article"
+source: "Blog Name or Publication"
+originalPublishDate: 2025-01-15
+image: "https://example.com/image.jpg"
+---
+
+Brief description for internal reference.`}</code></pre>
+        <div class="mt-4 text-sm text-[rgb(var(--color-text-muted))]">
+          <p class="mb-2"><strong>Required fields for external articles:</strong></p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li><code class="text-[rgb(var(--color-clay))]">externalUrl</code> - The full URL to the external article</li>
+            <li><code class="text-[rgb(var(--color-clay))]">source</code> - Name of the publication or blog</li>
+          </ul>
+          <p class="mt-3"><strong>Optional:</strong></p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li><code class="text-[rgb(var(--color-clay))]">originalPublishDate</code> - When the article was originally published</li>
+            <li><code class="text-[rgb(var(--color-clay))]">image</code> - Featured image URL for the article card</li>
+          </ul>
+        </div>
+      </Card>
+    </div>
+
+    <!-- YouTube Video Template -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-3xl font-mono font-bold mb-8">Share YouTube Videos</h2>
+      <Card class="p-8">
+        <p class="text-[rgb(var(--color-text-muted))] mb-4">
+          Found a great Claude Code video on YouTube? Use this template to add video posts with an embedded player:
+        </p>
+        <pre class="bg-[rgb(var(--color-gray-900))] border border-[rgb(var(--color-border))] rounded-lg p-4 overflow-x-auto"><code class="text-sm font-mono text-[rgb(var(--color-text))]">{`---
+title: "Video Title"
+description: "A brief description of what the video covers"
+publishDate: 2025-01-20
+authors: ["your-id"]
+tags: ["video", "tutorial"]
+youtubeUrl: "https://www.youtube.com/watch?v=VIDEO_ID"
+---
+
+Brief description or notes about the video content.
+
+## What You'll Learn
+
+- Key topic 1
+- Key topic 2
+- Key topic 3`}</code></pre>
+        <div class="mt-4 text-sm text-[rgb(var(--color-text-muted))]">
+          <p class="mb-2"><strong>Required fields for video posts:</strong></p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li><code class="text-[rgb(var(--color-clay))]">youtubeUrl</code> - The full YouTube video URL (supports youtube.com/watch?v=, youtu.be/, and embed formats)</li>
+          </ul>
+          <p class="mt-3"><strong>How it works:</strong></p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li>Video posts are displayed in the blog feed with a red "Video" badge</li>
+            <li>Clicking opens a dedicated page with an embedded YouTube player</li>
+            <li>A "Watch on YouTube" button links to the original video</li>
+            <li>The content below the frontmatter appears under the video embed</li>
+          </ul>
+        </div>
       </Card>
     </div>
 

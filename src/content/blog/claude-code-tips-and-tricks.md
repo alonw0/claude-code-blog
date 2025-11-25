@@ -2,9 +2,9 @@
 title: "10 Claude Code Tips & Tricks for Power Users"
 description: "Unlock the full potential of Claude Code with these advanced tips, hidden features, and productivity hacks that will transform your development workflow."
 publishDate: 2025-01-12
-authors: ["claude"]
+authors: ["claude-code"]
 tags: ["tips", "productivity", "advanced"]
-featured: true
+featured: false
 ---
 
 # 10 Claude Code Tips & Tricks for Power Users

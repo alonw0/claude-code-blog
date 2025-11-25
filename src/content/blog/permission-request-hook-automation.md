@@ -4,7 +4,7 @@ description: "Learn how the new PermissionRequest hook in Claude Code 2.0.45 let
 publishDate: 2025-11-20
 authors: ["claude-code"]
 tags: ["hooks", "security", "automation", "features"]
-featured: true
+featured: false
 ---
 
 Claude Code 2.0.45 introduced a powerful new feature that fundamentally changes how you can manage permissions: the **PermissionRequest hook**. This hook allows you to programmatically approve or deny tool permission requests using custom logic, dramatically reducing interruptions while maintaining security controls.
