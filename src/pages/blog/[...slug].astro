@@ -182,10 +182,43 @@ const isVideo = !!youtubeVideoId;
         ))}
       </div>
 
-      <!-- Compact Share Buttons -->
-      <div class="mt-6 flex items-center gap-3" data-zen-hide>
-        <span class="text-sm font-mono text-[rgb(var(--color-text-muted))]">Share:</span>
-        <div class="flex gap-2">
+      <!-- Text Size Controls & Compact Share Buttons -->
+      <div class="mt-6 flex items-center gap-6" data-zen-hide>
+        <!-- Text Size Controls -->
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-mono text-[rgb(var(--color-text-muted))]">Size:</span>
+          <div class="flex gap-1">
+            <button
+              id="text-size-small"
+              class="inline-flex items-center justify-center w-9 h-9 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-md text-[rgb(var(--color-text))] hover:border-[rgb(var(--color-clay))] hover:text-[rgb(var(--color-clay))] transition-all duration-300 hover:scale-110 active:scale-95"
+              aria-label="Small text size"
+              title="Small"
+            >
+              <span class="font-serif text-xs leading-none">A</span>
+            </button>
+            <button
+              id="text-size-default"
+              class="inline-flex items-center justify-center w-9 h-9 bg-[rgb(var(--color-clay))] border border-[rgb(var(--color-clay))] rounded-md text-white transition-all duration-300 hover:scale-110 active:scale-95"
+              aria-label="Default text size"
+              title="Default"
+            >
+              <span class="font-serif text-sm leading-none">A</span>
+            </button>
+            <button
+              id="text-size-large"
+              class="inline-flex items-center justify-center w-9 h-9 bg-[rgb(var(--color-surface))] border border-[rgb(var(--color-border))] rounded-md text-[rgb(var(--color-text))] hover:border-[rgb(var(--color-clay))] hover:text-[rgb(var(--color-clay))] transition-all duration-300 hover:scale-110 active:scale-95"
+              aria-label="Large text size"
+              title="Large"
+            >
+              <span class="font-serif text-base leading-none">A</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Share -->
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-mono text-[rgb(var(--color-text-muted))]">Share:</span>
+          <div class="flex gap-2">
           <!-- Compact Native Share Button -->
           <button
             id="compact-native-share-btn"
@@ -238,6 +271,7 @@ const isVideo = !!youtubeVideoId;
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
             </svg>
           </a>
+        </div>
         </div>
       </div>
     </header>
@@ -899,5 +933,88 @@ const isVideo = !!youtubeVideoId;
         // LocalStorage not available
       }
     })();
+
+    // Text Size Controls
+    (() => {
+      const contentContainer = document.getElementById('zen-article-content');
+      const smallBtn = document.getElementById('text-size-small');
+      const defaultBtn = document.getElementById('text-size-default');
+      const largeBtn = document.getElementById('text-size-large');
+
+      if (!contentContainer || !smallBtn || !defaultBtn || !largeBtn) return;
+
+      const sizes = {
+        small: { prose: 'prose-base', class: 'text-size-small' },
+        default: { prose: 'prose-lg', class: 'text-size-default' },
+        large: { prose: 'prose-xl', class: 'text-size-large' }
+      };
+
+      function updateButtonStates(activeSize: 'small' | 'default' | 'large') {
+        const buttons = [
+          { btn: smallBtn, size: 'small' as const },
+          { btn: defaultBtn, size: 'default' as const },
+          { btn: largeBtn, size: 'large' as const }
+        ];
+
+        buttons.forEach(({ btn, size }) => {
+          if (size === activeSize) {
+            btn.classList.remove('bg-[rgb(var(--color-surface))]', 'border-[rgb(var(--color-border))]', 'text-[rgb(var(--color-text))]');
+            btn.classList.add('bg-[rgb(var(--color-clay))]', 'border-[rgb(var(--color-clay))]', 'text-white');
+          } else {
+            btn.classList.remove('bg-[rgb(var(--color-clay))]', 'border-[rgb(var(--color-clay))]', 'text-white');
+            btn.classList.add('bg-[rgb(var(--color-surface))]', 'border-[rgb(var(--color-border))]', 'text-[rgb(var(--color-text))]');
+          }
+        });
+      }
+
+      function setTextSize(size: 'small' | 'default' | 'large') {
+        // Remove all size classes
+        contentContainer.classList.remove('text-size-small', 'text-size-default', 'text-size-large');
+        const proseDiv = contentContainer.querySelector('.prose');
+        if (proseDiv) {
+          proseDiv.classList.remove('prose-base', 'prose-lg', 'prose-xl');
+          proseDiv.classList.add(sizes[size].prose);
+        }
+
+        // Add new size class
+        contentContainer.classList.add(sizes[size].class);
+
+        // Update button states
+        updateButtonStates(size);
+
+        // Save preference
+        try {
+          localStorage.setItem('textSize', size);
+        } catch (e) {
+          // LocalStorage not available
+        }
+      }
+
+      // Button click handlers
+      smallBtn.addEventListener('click', () => setTextSize('small'));
+      defaultBtn.addEventListener('click', () => setTextSize('default'));
+      largeBtn.addEventListener('click', () => setTextSize('large'));
+
+      // Restore saved preference
+      try {
+        const savedSize = localStorage.getItem('textSize') as 'small' | 'default' | 'large' | null;
+        if (savedSize && sizes[savedSize]) {
+          setTextSize(savedSize);
+        }
+      } catch (e) {
+        // LocalStorage not available
+      }
+    })();
   </script>
+
+  <style>
+    /* Smooth font-size transitions */
+    #zen-article-content {
+      transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #zen-article-content .prose {
+      transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
 </BaseLayout>

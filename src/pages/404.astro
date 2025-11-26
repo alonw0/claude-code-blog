@@ -1,0 +1,589 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="404 - Page Not Found | Claude Code Blog"
+  description="Looks like this page got lost in the code. Let's help you find your way back."
+>
+  <div class="min-h-screen flex items-center justify-center px-4 py-12 overflow-hidden relative">
+    <!-- CRT Scanlines Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-canvas" class="matrix-bg"></canvas>
+
+    <!-- Noise/Grain Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Main Content -->
+    <div class="terminal-container relative z-10">
+      <!-- Terminal Header -->
+      <div class="terminal-header">
+        <div class="terminal-buttons">
+          <span class="terminal-btn terminal-btn-close"></span>
+          <span class="terminal-btn terminal-btn-minimize"></span>
+          <span class="terminal-btn terminal-btn-maximize"></span>
+        </div>
+        <div class="terminal-title">claude-code-terminal ~ 404.log</div>
+      </div>
+
+      <!-- Terminal Body -->
+      <div class="terminal-body">
+        <!-- ASCII Art 404 with Glitch -->
+        <div class="ascii-art glitch-text" data-text="404">
+          <pre class="ascii-container">
+ ██╗  ██╗ ██████╗ ██╗  ██╗
+ ██║  ██║██╔═████╗██║  ██║
+ ███████║██║██╔██║███████║
+ ╚════██║████╔╝██║╚════██║
+      ██║╚██████╔╝     ██║
+      ╚═╝ ╚═════╝      ╚═╝</pre>
+        </div>
+
+        <!-- Terminal Output -->
+        <div class="terminal-output">
+          <div class="terminal-line">
+            <span class="prompt">claude@code-blog</span><span class="prompt-sep">:</span><span class="path">~</span><span class="prompt-sep">$</span>
+            <span class="command" id="command-1"></span>
+            <span class="cursor">█</span>
+          </div>
+          <div class="terminal-response" id="response-1"></div>
+
+          <div class="terminal-line mt-4">
+            <span class="prompt">claude@code-blog</span><span class="prompt-sep">:</span><span class="path">~</span><span class="prompt-sep">$</span>
+            <span class="command" id="command-2"></span>
+          </div>
+          <div class="terminal-response" id="response-2"></div>
+
+          <div class="terminal-line mt-4">
+            <span class="prompt">claude@code-blog</span><span class="prompt-sep">:</span><span class="path">~</span><span class="prompt-sep">$</span>
+            <span class="command" id="command-3"></span>
+          </div>
+          <div class="terminal-response error-text" id="response-3"></div>
+        </div>
+
+        <!-- Navigation Options -->
+        <div class="terminal-nav">
+          <div class="nav-header">╔═══ Available Commands ═══╗</div>
+          <div class="nav-options">
+            <a href="/" class="nav-option">
+              <span class="nav-icon">→</span>
+              <span class="nav-command">cd ~/home</span>
+              <span class="nav-desc">Return to homepage</span>
+            </a>
+            <a href="/blog" class="nav-option">
+              <span class="nav-icon">→</span>
+              <span class="nav-command">cd ~/blog</span>
+              <span class="nav-desc">Browse blog posts</span>
+            </a>
+            <a href="/tools" class="nav-option">
+              <span class="nav-icon">→</span>
+              <span class="nav-command">cd ~/tools</span>
+              <span class="nav-desc">Explore tools</span>
+            </a>
+            <button id="glitch-btn" class="nav-option nav-button">
+              <span class="nav-icon">⚡</span>
+              <span class="nav-command">./glitch.sh</span>
+              <span class="nav-desc">Trigger system glitch</span>
+            </button>
+          </div>
+          <div class="nav-footer">╚═════════════════════════╝</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* CRT & Terminal Aesthetic */
+    .terminal-container {
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.98) 0%,
+        rgba(30, 41, 59, 0.95) 100%
+      );
+      border: 2px solid rgba(var(--color-clay), 0.3);
+      border-radius: 12px;
+      box-shadow:
+        0 0 40px rgba(var(--color-clay), 0.2),
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        inset 0 0 60px rgba(0, 0, 0, 0.3);
+      max-width: 900px;
+      width: 100%;
+      overflow: hidden;
+      animation: terminalEntry 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes terminalEntry {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .terminal-header {
+      background: rgba(30, 41, 59, 0.8);
+      border-bottom: 1px solid rgba(var(--color-clay), 0.2);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .terminal-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .terminal-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .terminal-btn-close {
+      background: #ff5f56;
+      box-shadow: 0 0 8px rgba(255, 95, 86, 0.5);
+    }
+
+    .terminal-btn-minimize {
+      background: #ffbd2e;
+      box-shadow: 0 0 8px rgba(255, 189, 46, 0.5);
+    }
+
+    .terminal-btn-maximize {
+      background: #27c93f;
+      box-shadow: 0 0 8px rgba(39, 201, 63, 0.5);
+    }
+
+    .terminal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+    }
+
+    .terminal-body {
+      padding: 32px 24px;
+      min-height: 500px;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    /* ASCII Art Styling */
+    .ascii-art {
+      text-align: center;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .ascii-container {
+      font-size: 16px;
+      line-height: 1.2;
+      color: rgb(var(--color-clay));
+      text-shadow:
+        0 0 10px rgba(var(--color-clay), 0.8),
+        0 0 20px rgba(var(--color-clay), 0.4);
+      font-weight: bold;
+      display: inline-block;
+      animation: asciiPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes asciiPulse {
+      0%, 100% {
+        opacity: 1;
+        text-shadow:
+          0 0 10px rgba(var(--color-clay), 0.8),
+          0 0 20px rgba(var(--color-clay), 0.4);
+      }
+      50% {
+        opacity: 0.9;
+        text-shadow:
+          0 0 15px rgba(var(--color-clay), 1),
+          0 0 30px rgba(var(--color-clay), 0.6);
+      }
+    }
+
+    /* Glitch Effect */
+    .glitch-text {
+      position: relative;
+    }
+
+    .glitch-active .ascii-container {
+      animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    }
+
+    @keyframes glitch {
+      0% {
+        transform: translate(0);
+      }
+      20% {
+        transform: translate(-2px, 2px);
+      }
+      40% {
+        transform: translate(-2px, -2px);
+      }
+      60% {
+        transform: translate(2px, 2px);
+      }
+      80% {
+        transform: translate(2px, -2px);
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+
+    /* Terminal Output */
+    .terminal-output {
+      margin-bottom: 32px;
+    }
+
+    .terminal-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .mt-4 {
+      margin-top: 16px;
+    }
+
+    .prompt {
+      color: #22c55e;
+      font-weight: 600;
+    }
+
+    .prompt-sep {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .path {
+      color: #3b82f6;
+      font-weight: 600;
+    }
+
+    .command {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .cursor {
+      color: rgb(var(--color-clay));
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .terminal-response {
+      color: rgba(255, 255, 255, 0.8);
+      margin-left: 24px;
+      margin-top: 8px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .error-text {
+      color: #f87171;
+      text-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
+    }
+
+    /* Navigation */
+    .terminal-nav {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(var(--color-clay), 0.2);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 32px;
+    }
+
+    .nav-header,
+    .nav-footer {
+      color: rgb(var(--color-clay));
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 16px;
+      text-shadow: 0 0 10px rgba(var(--color-clay), 0.5);
+    }
+
+    .nav-footer {
+      margin-bottom: 0;
+      margin-top: 16px;
+    }
+
+    .nav-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .nav-option:hover {
+      background: rgba(var(--color-clay), 0.1);
+      border-color: rgba(var(--color-clay), 0.4);
+      transform: translateX(4px);
+      box-shadow: 0 0 20px rgba(var(--color-clay), 0.2);
+    }
+
+    .nav-button {
+      width: 100%;
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    .nav-icon {
+      color: rgb(var(--color-clay));
+      font-size: 18px;
+      min-width: 24px;
+    }
+
+    .nav-command {
+      color: #22c55e;
+      font-weight: 600;
+      min-width: 140px;
+    }
+
+    .nav-desc {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 13px;
+    }
+
+    /* Scanlines */
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 100;
+      animation: scanlineMove 8s linear infinite;
+    }
+
+    @keyframes scanlineMove {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(10px);
+      }
+    }
+
+    /* Matrix Background */
+    .matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.3;
+    }
+
+    /* Noise Overlay */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence baseFrequency="0.9" numOctaves="4"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+      pointer-events: none;
+      z-index: 1;
+      animation: noiseMove 0.5s steps(2) infinite;
+    }
+
+    @keyframes noiseMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(5px, 5px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .terminal-body {
+        padding: 24px 16px;
+        min-height: 400px;
+      }
+
+      .ascii-container {
+        font-size: 12px;
+      }
+
+      .nav-option {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .nav-command {
+        min-width: auto;
+      }
+    }
+  </style>
+
+  <script>
+    // Typing effect
+    function typeText(elementId: string, text: string, delay: number = 50): Promise<void> {
+      return new Promise((resolve) => {
+        const element = document.getElementById(elementId);
+        if (!element) {
+          resolve();
+          return;
+        }
+
+        let index = 0;
+        const interval = setInterval(() => {
+          if (index < text.length) {
+            element.textContent += text[index];
+            index++;
+          } else {
+            clearInterval(interval);
+            resolve();
+          }
+        }, delay);
+      });
+    }
+
+    // Matrix rain effect
+    function initMatrix() {
+      const canvas = document.getElementById('matrix-canvas') as HTMLCanvasElement;
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const columns = Math.floor(canvas.width / 20);
+      const drops: number[] = Array(columns).fill(1);
+
+      const chars = '01アイウエオカキクケコサシスセソタチツテト'.split('');
+
+      function draw() {
+        if (!ctx || !canvas) return;
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = 'rgb(217, 119, 87)';
+        ctx.font = '15px JetBrains Mono, monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillText(text, i * 20, drops[i] * 20);
+
+          if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
+      }
+
+      setInterval(draw, 50);
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    }
+
+    // Glitch effect
+    function triggerGlitch() {
+      const asciiArt = document.querySelector('.ascii-art');
+      const terminal = document.querySelector('.terminal-container');
+
+      if (!asciiArt || !terminal) return;
+
+      asciiArt.classList.add('glitch-active');
+      terminal.classList.add('glitch-active');
+
+      setTimeout(() => {
+        asciiArt.classList.remove('glitch-active');
+        terminal.classList.remove('glitch-active');
+      }, 500);
+    }
+
+    // Initialize
+    async function init() {
+      initMatrix();
+
+      // Remove cursor from first line before typing
+      setTimeout(async () => {
+        const cursor = document.querySelector('.cursor');
+        if (cursor) cursor.remove();
+
+        await typeText('command-1', 'ls -la /pages/requested-page', 40);
+        await new Promise(r => setTimeout(r, 300));
+
+        const response1 = document.getElementById('response-1');
+        if (response1) {
+          response1.textContent = 'ls: cannot access \'/pages/requested-page\': No such file or directory';
+        }
+
+        await new Promise(r => setTimeout(r, 500));
+        await typeText('command-2', 'cat /var/log/errors.log', 40);
+        await new Promise(r => setTimeout(r, 300));
+
+        const response2 = document.getElementById('response-2');
+        if (response2) {
+          response2.innerHTML = '[WARN] Route resolution failed<br>[INFO] Attempting fallback routes...<br>[ERROR] All fallback routes exhausted';
+        }
+
+        await new Promise(r => setTimeout(r, 500));
+        await typeText('command-3', 'locate --help', 40);
+        await new Promise(r => setTimeout(r, 300));
+
+        const response3 = document.getElementById('response-3');
+        if (response3) {
+          response3.innerHTML = '⚠ ERROR 404: Page not found in database<br>→ This page may have been moved, deleted, or never existed.<br>→ Try navigating using the commands below.';
+        }
+      }, 500);
+
+      // Glitch button
+      const glitchBtn = document.getElementById('glitch-btn');
+      if (glitchBtn) {
+        glitchBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          triggerGlitch();
+        });
+      }
+    }
+
+    // Start when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</BaseLayout>
