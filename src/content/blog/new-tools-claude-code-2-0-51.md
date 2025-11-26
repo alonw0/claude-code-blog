@@ -41,7 +41,7 @@ The enhanced **Plan Mode v2** brings interactive planning capabilities powered b
 
 When entering plan mode, Claude now asks clarifying questions about your requirements, architectural preferences, and implementation approach. This interactive dialogue ensures that the final plan aligns with your specific needs and constraints. Once the initial plan is drafted, you can edit it directly, treating it as a collaborative design document.
 
-The efficiency gains are substantial: Plan Mode v2 achieves 76% fewer tokens while delivering better results. This means faster planning, lower costs, and more context remaining for the actual implementation phase. The integration with Opus 4.5 brings improved reasoning capabilities to the planning process, helping identify edge cases and potential issues before any code is written.
+The integration with Opus 4.5 brings improved reasoning capabilities to the planning process, helping identify edge cases and potential issues before any code is written. This results in faster planning, more efficient token usage, and more context remaining for the actual implementation phase.
 
 ## What This Means for Developers
 

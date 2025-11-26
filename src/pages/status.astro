@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/ui/Card.astro';
+import StatusIndicator from '../components/StatusIndicator.astro';
+import IncidentTimeline from '../components/IncidentTimeline.astro';
+
+// Fetch current status from Claude Status API
+let statusData: { indicator: 'none' | 'minor' | 'major' | 'critical', description: string } = {
+  indicator: 'none',
+  description: 'All Systems Operational'
+};
+
+try {
+  const response = await fetch('https://status.claude.com/api/v2/status.json');
+  if (response.ok) {
+    const data = await response.json();
+    statusData = {
+      indicator: data.status.indicator,
+      description: data.status.description
+    };
+  }
+} catch (error) {
+  console.error('Failed to fetch status:', error);
+}
+---
+
+<BaseLayout
+  title="Claude Status - System Status and Incident History"
+  description="Check the current status of Claude services including claude.ai, API, and Claude Code. View recent incidents and system uptime."
+>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero Section -->
+    <div class="max-w-4xl mx-auto text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-mono font-bold mb-4">System Status</h1>
+      <p class="text-xl text-[rgb(var(--color-text-muted))] mb-6">
+        Current status of Claude services and recent incidents
+      </p>
+      <div class="flex justify-center">
+        <StatusIndicator indicator={statusData.indicator} description={statusData.description} size="lg" />
+      </div>
+    </div>
+
+    <!-- Current Status Section -->
+    <div class="max-w-6xl mx-auto mb-16">
+      <h2 class="text-2xl font-mono font-bold mb-6">Services</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- claude.ai -->
+        <Card class="p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold">claude.ai</h3>
+            <StatusIndicator indicator="none" size="sm" />
+          </div>
+          <p class="text-sm text-[rgb(var(--color-text-muted))]">Claude web interface</p>
+          <p class="text-xs text-[rgb(var(--color-text-muted))] mt-2 font-mono">Uptime: 99.53%</p>
+        </Card>
+
+        <!-- Claude API -->
+        <Card class="p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold">Claude API</h3>
+            <StatusIndicator indicator="none" size="sm" />
+          </div>
+          <p class="text-sm text-[rgb(var(--color-text-muted))]">api.anthropic.com</p>
+          <p class="text-xs text-[rgb(var(--color-text-muted))] mt-2 font-mono">Uptime: 99.8%</p>
+        </Card>
+
+        <!-- platform.claude.com -->
+        <Card class="p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold">Platform</h3>
+            <StatusIndicator indicator="none" size="sm" />
+          </div>
+          <p class="text-sm text-[rgb(var(--color-text-muted))]">platform.claude.com</p>
+          <p class="text-xs text-[rgb(var(--color-text-muted))] mt-2 font-mono">Uptime: 99.8%</p>
+        </Card>
+
+        <!-- Claude Code -->
+        <Card class="p-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-mono font-semibold">Claude Code</h3>
+            <StatusIndicator indicator="none" size="sm" />
+          </div>
+          <p class="text-sm text-[rgb(var(--color-text-muted))]">CLI coding assistant</p>
+          <p class="text-xs text-[rgb(var(--color-text-muted))] mt-2 font-mono">Uptime: 99.81%</p>
+        </Card>
+      </div>
+
+      <div class="mt-6 text-center">
+        <a
+          href="https://status.claude.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm text-[rgb(var(--color-clay))] hover:underline font-mono"
+        >
+          View detailed status on status.claude.com
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Incident History Section -->
+    <div class="max-w-6xl mx-auto">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-mono font-bold">Recent Incidents</h2>
+        <a
+          href="https://status.claude.com/history"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-[rgb(var(--color-clay))] hover:underline font-mono"
+        >
+          View all incidents →
+        </a>
+      </div>
+
+      <IncidentTimeline />
+    </div>
+
+    <!-- Subscribe Section -->
+    <div class="max-w-6xl mx-auto mt-12">
+      <Card class="p-8 text-center bg-gradient-to-br from-[rgba(var(--color-clay),0.05)] to-transparent">
+        <h3 class="text-xl font-mono font-bold mb-3">Stay Updated</h3>
+        <p class="text-[rgb(var(--color-text-muted))] mb-4">
+          Subscribe to status updates to receive notifications about incidents and maintenance windows.
+        </p>
+        <a
+          href="https://status.claude.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-[rgb(var(--color-clay))] text-white rounded-lg font-mono hover:opacity-90 transition-opacity"
+        >
+          Subscribe to Updates
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </Card>
+    </div>
+  </div>
+</BaseLayout>

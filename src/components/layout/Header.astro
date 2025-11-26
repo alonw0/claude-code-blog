@@ -7,6 +7,7 @@ const navItems = [
   { href: '/blog', label: 'Blog' },
   { href: '/tools', label: 'Tools' },
   { href: '/news', label: 'News' },
+  { href: '/status', label: 'Status' },
   { href: '/authors', label: 'Authors' },
   { href: '/contribute', label: 'Contribute' },
 ];
@@ -39,9 +40,7 @@ const navItems = [
       <div class="flex items-center space-x-3">
         <!-- Version Badge -->
         <a
-          href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/changelog"
           class="hidden md:inline-flex items-center hover:scale-105 transition-transform duration-300"
           title="View Claude Code Changelog"
         >
