@@ -1,0 +1,102 @@
+---
+title: "Claude Code Can Now Explain Itself: The Claude Code Guide Agent"
+description: "Claude Code v2.0.49 quietly added a claude-code-guide subagent that helps Claude understand how to use its own features. Here's what it does and how it works."
+publishDate: 2025-11-23
+authors:
+  - alon-wolenitz
+tags:
+  - features
+  - agents
+  - documentation
+draft: false
+---
+
+Claude Code v2.0.49 added something interesting: a **claude-code-guide subagent** designed to "improve Claude Code's ability to know how to use itself."
+
+It's a meta-agent that helps Claude understand Claude Code.
+
+## What It Does
+
+The claude-code-guide agent is a specialized subagent that activates when you ask Claude Code questions about... Claude Code.
+
+**Triggers**:
+- "Can Claude Code do...?"
+- "Does Claude Code have...?"
+- "How do I implement [hooks/slash commands/MCP servers]?"
+- Questions about Claude Agent SDK architecture
+
+Instead of Claude guessing or falling back on general knowledge, it now spawns a dedicated agent that:
+
+1. **Fetches documentation maps** for Claude Code and the Agent SDK
+2. **Identifies relevant resources** across categories (Getting Started, Features, customization, MCP Integration, configuration)
+3. **Retrieves specific documentation pages** to answer your question
+4. **References local project files** (CLAUDE.md, .claude/ directory) when applicable
+5. **Provides actionable guidance** grounded in official docs
+
+## Why This Matters
+
+Before this, Claude Code would answer questions about its own features based on training data—which could be outdated or incomplete. Now it looks up current documentation.
+
+The agent acts like a documentation-aware assistant that:
+- Knows the latest features
+- Can explain keyboard shortcuts
+- Walks you through hook implementation
+- Guides MCP server setup
+- References the Agent SDK correctly
+
+## How It Works Under the Hood
+
+Based on the [system prompts repository](https://github.com/Piebald-AI/claude-code-system-prompts), the agent uses:
+
+- **589 tokens** for the main agent prompt
+- **123 tokens** for the whenToUse criteria
+
+**Smart resuming**: Before spawning a new guide agent, Claude checks if there's a recently completed one it can resume. This maintains context from previous documentation lookups and avoids redundant fetches.
+
+## The Quiet Launch
+
+What's interesting: v2.0.49's changelog doesn't mention this agent. The official changelog lists:
+- Added readline-style ctrl-y for pasting deleted text
+- Improved clarity of usage limit warning message
+- Fixed handling of subagent permissions
+
+No mention of claude-code-guide.
+
+This was discovered by examining the [system prompts](https://github.com/Piebald-AI/claude-code-system-prompts/blob/main/system-prompts/agent-prompt-claude-code-guide-agent.md) rather than official release notes.
+
+It was also featured on twitter by an Anthropic employee:
+https://twitter.com/trq212/status/1992695606490665157
+
+## Try It Yourself
+
+Ask Claude Code a meta question:
+
+```
+"What hooks are available in Claude Code?"
+```
+
+```
+"How do I create a custom slash command?"
+```
+
+```
+"Can you explain how MCP servers work?"
+```
+
+You might notice Claude fetching documentation before answering. That's the guide agent at work.
+
+## What This Reveals
+
+This is part of a broader pattern: Claude Code is becoming more **self-aware** about its capabilities. Instead of relying on pre-training knowledge (which gets stale), specialized agents fetch current documentation.
+
+It's recursive improvement: Claude Code using Claude Code features (subagents, web fetching, documentation parsing) to understand itself better.
+
+And it works. The next time you're confused about a Claude Code feature, just ask. There's now an agent whose entire job is knowing the answer.
+
+---
+
+**Resources**:
+- [Claude Code Guide Agent Prompt](https://github.com/Piebald-AI/claude-code-system-prompts/blob/main/system-prompts/agent-prompt-claude-code-guide-agent.md)
+- [whenToUse Criteria](https://github.com/Piebald-AI/claude-code-system-prompts/blob/main/system-prompts/system-prompt-whentouse-note-for-claude-code-guide-subagent.md)
+- [Claude Code Subagents Documentation](https://code.claude.com/docs/en/sub-agents)
+- [Official Changelog](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md)
