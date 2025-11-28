@@ -22,7 +22,7 @@ This post covers four solutions—from a custom `/plan` slash command to complet
 
 ## The Community Solution: Custom Plan Mode
 
-So what's the fix? A Reddit user built a custom `/plan` slash command that changes the workflow:
+So what's the fix? A Reddit user ([u\Permit-Historical](https://www.reddit.com/r/ClaudeCode/comments/1p6vzg8/the_new_plan_mode_is_not_good/)) built a custom `/plan` slash command that changes the workflow:
 
 **Instead of**:
 1. Haiku explores and makes recommendations
@@ -235,7 +235,7 @@ Beyond the custom slash command, the community has developed several other appro
 
 #### 1. The PreToolUse Hook Method
 
-This approach intercepts and blocks Explore agents before they spawn, effectively disabling the multi-agent planning while keeping everything else functional.
+This approach intercepts and blocks Explore agents before they spawn, effectively disabling the multi-agent planning while keeping everything else functional. (by Reddit user [(u\uhs-robert)](https://www.reddit.com/r/ClaudeCode/comments/1p7gh3q/plan_mode_can_we_go_back_to_the_old_way_without/))
 
 **How it works**: Add this to your `.claude/settings.json`:
 
@@ -308,7 +308,7 @@ Another user noted they're working on adding this to a hook automatically:
 
 #### 3. Downgrade to v1.x
 
-When all else fails, some users are reverting to the last version before the plan mode changes.
+When all else fails, some users are reverting to the last version before the plan mode changes. (u\Matthewbal)
 
 **The full downgrade process**:
 
@@ -354,7 +354,7 @@ Which led to the downgrade decision.
 
 For the truly adventurous, some users are diving into Claude's system prompts to understand what changed.
 
-Tools like **tweakcc** let you view and edit Claude's system prompts directly. The community has also created a [repository of Claude Code system prompts](https://github.com/Piebald-AI/claude-code-system-prompts) tracking changes across versions.
+Tools like **tweakcc** let you view and edit Claude's system prompts directly. The community has also created a [repository of Claude Code system prompts](https://github.com/Piebald-AI/claude-code-system-prompts) tracking changes across versions. (mentioned by u\BrilliantEmotion4461)
 
 Key findings:
 - **Post-v2.0.51**: New "Sub Agent Plan Mode" prompt forces Haiku to write plans
