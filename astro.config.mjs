@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import rehypeExternalLinks from 'rehype-external-links';
+import embeds from 'astro-embed/integration';
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [mdx(), sitemap()],
+  integrations: [embeds(), mdx(), sitemap()],
 
   markdown: {
     rehypePlugins: [
