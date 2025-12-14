@@ -1,6 +1,6 @@
 ---
-title: "Claude Code v2.0.67: Prompt Suggestions and Thinking Mode by Default"
-description: "Claude Code v2.0.67 adds prompt suggestions (Tab to accept), enables thinking mode by default for Opus 4.5, improves /permissions search, and fixes 7 bugs."
+title: "Claude Code v2.0.67: Thinking Mode by Default and Permissions Search"
+description: "Claude Code v2.0.67 enables thinking mode by default for Opus 4.5, adds permissions search, and fixes 7 bugs including better non-Latin text support."
 publishDate: 2025-12-11
 authors: ["claude-code"]
 tags: ["release", "features", "productivity"]
@@ -8,23 +8,11 @@ featured: false
 draft: false
 ---
 
-# Claude Code v2.0.67: Prompt Suggestions and Thinking Mode by Default
+# Claude Code v2.0.67: Thinking Mode by Default and Permissions Search
 
-You start typing a request. Before you finish, Claude suggests the complete prompt. Press Tab to accept it. Press Enter to submit as-is.
+Claude Code v2.0.67 enables thinking mode by default for Opus 4.5, adds search functionality to the permissions system, and ships with 7 bug fixes including better support for non-Latin text.**\***
 
-Claude Code v2.0.67 introduces prompt suggestions to speed up your workflow, enables thinking mode by default for Opus 4.5, adds search to the permissions system, and ships with 7 bug fixes including better support for non-Latin text.
-
-## Prompt Suggestions: The Headline Feature
-
-**What changed:** Claude now suggests prompts to speed up your workflow. As you type, Claude offers suggestions for completing your request.
-
-**How to use:**
-- **Tab**: Accept the suggested prompt
-- **Enter**: Submit your prompt as-is (ignoring the suggestion)
-
-**Why it matters:** Common workflows get faster. If Claude recognizes the pattern of what you're typing, it can suggest the complete prompt - saving you keystrokes and time on repetitive tasks.
-
-The feature is designed to accelerate familiar patterns without getting in the way when you're crafting custom requests.
+**\*Note:** The original v2.0.67 changelog entry included a prompt suggestions feature ("Claude now suggests prompts to speed up your workflow: press Tab to accept or Enter to submit"), but this entry was removed in the v2.0.68 changelog update. This post has been updated to reflect the current changelog.
 
 ## Thinking Mode: Now Default for Opus 4.5
 
@@ -120,12 +108,6 @@ npm update -g @anthropic-ai/claude-code
 claude --version
 ```
 
-**Try prompt suggestions:**
-1. Start typing a common request in Claude Code
-2. Watch for Claude's prompt suggestion to appear
-3. Press Tab to accept the suggestion, or Enter to submit as-is
-4. Continue with your workflow
-
 **Check thinking mode:**
 Opus 4.5 now has thinking mode enabled by default. To verify or adjust settings, use `/config`.
 
@@ -136,7 +118,7 @@ Opus 4.5 now has thinking mode enabled by default. To verify or adjust settings,
 
 ## What's Next
 
-Claude Code v2.0.67 focuses on workflow acceleration (prompt suggestions), smarter defaults (thinking mode for Opus 4.5), and internationalization (non-Latin text support). The release demonstrates ongoing attention to both headline features and quality-of-life improvements.
+Claude Code v2.0.67 focuses on smarter defaults (thinking mode for Opus 4.5), improved tooling (/permissions search, /doctor diagnostics), and internationalization (non-Latin text support). The release demonstrates ongoing attention to both workflow improvements and quality-of-life enhancements.
 
 For complete release notes and updates, see the [official changelog](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md).
 
