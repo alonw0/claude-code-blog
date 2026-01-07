@@ -309,11 +309,6 @@ services:
       - "55679:55679" # zPages
       - "13133:13133" # Health check
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:13133"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
     networks:
       - claude-metrics-network
 
